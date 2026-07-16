@@ -1,0 +1,45 @@
+---
+import Base from '../layouts/Base.astro';
+
+const tools = [
+  {
+    href: '/cost-per-mile-calculator',
+    title: 'Cost Per Mile Calculator',
+    blurb:
+      'Your true cost per mile from fixed and variable costs — plus break-even rate and profit per load.',
+  },
+];
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Haul-Calc',
+    url: 'https://haul-calc.com/',
+    description: 'Free online calculators for owner-operators and truckers.',
+  },
+];
+---
+
+<Base
+  title="Haul-Calc — Free Trucking Calculators for Owner-Operators"
+  description="Free calculators for owner-operators: cost per mile, IFTA fuel tax, per diem, load profit and more. No sign-up, runs in your browser, nothing stored."
+  schema={schema}
+>
+  <h1>Free trucking calculators for owner-operators</h1>
+  <p class="subtitle">
+    Know your numbers before you book the load. Every tool is free, runs in your
+    browser, and stores nothing.
+  </p>
+
+  <div class="tool-grid">
+    {tools.map((t) => (
+      <a class="tool-card" href={t.href} style="text-decoration:none;color:inherit;">
+        <h2>{t.title}</h2>
+        <p>{t.blurb}</p>
+      </a>
+    ))}
+  </div>
+
+  <p class="subtitle">More calculators coming: IFTA fuel tax, per diem, load profit, toll cost, and more.</p>
+</Base>

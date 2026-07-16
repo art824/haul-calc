@@ -1,0 +1,252 @@
+:root {
+  --bg: #ffffff;
+  --surface: #f5f7f9;
+  --text: #1a2330;
+  --muted: #5b6b7d;
+  --border: #d9e1e8;
+  --accent: #0b5fff;
+  --accent-dark: #0847bf;
+  --ok: #0a7d4f;
+  --radius: 10px;
+  --max: 46rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 1rem 3rem;
+}
+
+h1 {
+  font-size: 1.7rem;
+  line-height: 1.25;
+  margin: 1.2rem 0 0.5rem;
+}
+
+h2 {
+  font-size: 1.25rem;
+  margin: 2rem 0 0.5rem;
+}
+
+h3 {
+  font-size: 1.05rem;
+  margin: 1.2rem 0 0.3rem;
+}
+
+p {
+  margin: 0.5rem 0;
+}
+
+a {
+  color: var(--accent);
+}
+
+.site-header {
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header .inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0.7rem 1rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.site-header a.brand {
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 1.05rem;
+}
+
+.site-header span.tag {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.subtitle {
+  color: var(--muted);
+  margin-bottom: 1.2rem;
+}
+
+/* Tool form */
+.tool {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin: 1rem 0 1.5rem;
+}
+
+.tool fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0 0 1rem;
+}
+
+.tool legend {
+  font-weight: 600;
+  padding: 0;
+  margin-bottom: 0.4rem;
+}
+
+.field {
+  display: grid;
+  grid-template-columns: 1fr 8.5rem;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.35rem 0;
+}
+
+.field label {
+  font-size: 0.95rem;
+}
+
+.field .hint {
+  display: block;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+input[type="number"] {
+  font: inherit;
+  width: 100%;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--text);
+}
+
+input[type="number"]:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+/* Results */
+.results {
+  border-top: 2px solid var(--accent);
+  background: #fff;
+  border-radius: 0 0 var(--radius) var(--radius);
+  padding: 0.8rem 1rem;
+}
+
+.results .big {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--accent-dark);
+}
+
+.results .row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.25rem 0;
+  border-bottom: 1px dashed var(--border);
+  font-size: 0.95rem;
+}
+
+.results .row:last-child {
+  border-bottom: 0;
+}
+
+.results .profit-pos {
+  color: var(--ok);
+  font-weight: 600;
+}
+
+.results .profit-neg {
+  color: #b3261e;
+  font-weight: 600;
+}
+
+/* FAQ + content */
+.faq details {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  margin: 0.5rem 0;
+}
+
+.faq summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Tool cards on homepage */
+.tool-grid {
+  display: grid;
+  gap: 0.8rem;
+  margin: 1.2rem 0;
+}
+
+.tool-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.9rem 1rem;
+}
+
+.tool-card h2 {
+  margin: 0 0 0.3rem;
+  font-size: 1.1rem;
+}
+
+.tool-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.related {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 0.8rem 1rem;
+  margin-top: 2rem;
+}
+
+.related h2 {
+  margin-top: 0;
+  font-size: 1rem;
+}
+
+.related ul {
+  margin: 0.4rem 0 0;
+  padding-left: 1.2rem;
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.site-footer .inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+@media (max-width: 480px) {
+  .field {
+    grid-template-columns: 1fr 7rem;
+  }
+}

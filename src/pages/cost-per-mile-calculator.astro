@@ -1,0 +1,164 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+
+const faqs = [
+  {
+    q: 'How do I calculate my cost per mile?',
+    a: 'Add up your fixed monthly costs (truck payment, insurance, permits, parking) and your variable costs for the month (fuel, maintenance, tires), then divide the total by the miles you drove that month. Cost per mile = total monthly costs ÷ total monthly miles.',
+  },
+  {
+    q: 'What is the average cost per mile for owner-operators in 2026?',
+    a: 'Most owner-operators run between $1.60 and $2.20 per mile all-in, depending on fuel prices, truck payment, insurance, and how many miles they drive per month. Your own number is what matters: driving more miles spreads fixed costs thinner and lowers your cost per mile.',
+  },
+  {
+    q: 'What is the difference between fixed and variable costs?',
+    a: 'Fixed costs stay the same whether the truck moves or not: truck payment, insurance, permits, plates, ELD subscription, parking. Variable costs only happen when you drive: fuel, maintenance, tires. Splitting them shows how much deadhead and low-mileage months really cost you.',
+  },
+  {
+    q: 'Why does my cost per mile matter when booking loads?',
+    a: 'Your cost per mile is your break-even rate. Any load that pays less per mile than your cost per mile loses money before you even factor in your own pay. Knowing the number lets you reject unprofitable freight with confidence.',
+  },
+  {
+    q: 'Is this calculator free? Do you store my numbers?',
+    a: 'It is 100% free and runs entirely in your browser. Nothing you type is uploaded, stored, or shared — close the tab and it is gone.',
+  },
+];
+
+const related = [
+  { href: '/', label: 'All trucking calculators' },
+];
+---
+
+<ToolLayout
+  metaTitle="Trucking Cost Per Mile Calculator (Free, 2026) — Haul-Calc"
+  description="Free cost per mile calculator for owner-operators. Enter your fixed and variable costs to get your true cost per mile, break-even rate, and profit per load. Runs in your browser."
+  h1="Trucking Cost Per Mile Calculator"
+  intro="Enter your monthly costs and miles. Your true cost per mile, break-even rate, and profit update instantly. Free, private, nothing is stored."
+  faqs={faqs}
+  related={related}
+>
+  <form class="tool" id="cpm-form" slot="tool" autocomplete="off">
+    <fieldset>
+      <legend>Fixed costs (per month)</legend>
+      <div class="field">
+        <label for="truck">Truck payment ($)</label>
+        <input type="number" id="truck" value="2200" min="0" step="50" inputmode="decimal" />
+      </div>
+      <div class="field">
+        <label for="insurance">Insurance ($)</label>
+        <input type="number" id="insurance" value="1100" min="0" step="50" inputmode="decimal" />
+      </div>
+      <div class="field">
+        <label for="permits">Permits, plates, ELD ($)</label>
+        <input type="number" id="permits" value="250" min="0" step="10" inputmode="decimal" />
+      </div>
+      <div class="field">
+        <label for="otherfixed">Other fixed costs ($)<span class="hint">parking, accounting, phone</span></label>
+        <input type="number" id="otherfixed" value="150" min="0" step="10" inputmode="decimal" />
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Variable costs</legend>
+      <div class="field">
+        <label for="fuelprice">Diesel price ($/gallon)</label>
+        <input type="number" id="fuelprice" value="3.60" min="0" step="0.05" inputmode="decimal" />
+      </div>
+      <div class="field">
+        <label for="mpg">Truck fuel economy (MPG)</label>
+        <input type="number" id="mpg" value="6.5" min="1" step="0.1" inputmode="decimal" />
+      </div>
+      <div class="field">
+        <label for="maintenance">Maintenance ($/mile)</label>
+        <input type="number" id="maintenance" value="0.18" min="0" step="0.01" inputmode="decimal" />
+      </div>
+      <div class="field">
+        <label for="tires">Tires ($/mile)</label>
+        <input type="number" id="tires" value="0.04" min="0" step="0.01" inputmode="decimal" />
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Your month</legend>
+      <div class="field">
+        <label for="miles">Miles per month</label>
+        <input type="number" id="miles" value="9000" min="1" step="100" inputmode="numeric" />
+      </div>
+      <div class="field">
+        <label for="rate">Rate you are offered ($/mile)<span class="hint">optional — to check profit</span></label>
+        <input type="number" id="rate" value="2.20" min="0" step="0.05" inputmode="decimal" />
+      </div>
+    </fieldset>
+
+    <div class="results" aria-live="polite">
+      <div>Your cost per mile</div>
+      <div class="big" id="out-cpm">$0.00</div>
+      <div class="row"><span>Fixed cost per mile</span><strong id="out-fixed">$0.00</strong></div>
+      <div class="row"><span>Variable cost per mile</span><strong id="out-variable">$0.00</strong></div>
+      <div class="row"><span>Total cost per month</span><strong id="out-monthly">$0</strong></div>
+      <div class="row"><span>Profit at your rate</span><strong id="out-profit">—</strong></div>
+    </div>
+  </form>
+
+  <section slot="content">
+    <h2>How this calculator works</h2>
+    <p>
+      Your cost per mile is every dollar it takes to keep your truck on the road,
+      divided by the miles you actually run. This tool splits it the way accountants
+      (and smart owner-operators) do:
+    </p>
+    <p>
+      <strong>Fixed cost per mile</strong> = (truck payment + insurance + permits + other fixed costs) ÷ monthly miles.
+      These bills arrive whether you drive or not, so the more you drive, the cheaper each mile gets.
+    </p>
+    <p>
+      <strong>Variable cost per mile</strong> = fuel cost per mile (diesel price ÷ MPG) + maintenance + tires.
+      These scale with every mile you run.
+    </p>
+    <p>
+      <strong>Break-even rate</strong> = fixed + variable cost per mile. Any load paying
+      less than this number per mile is moving your truck at a loss.
+    </p>
+  </section>
+</ToolLayout>
+
+<script>
+  const $ = (id: string) => document.getElementById(id) as HTMLInputElement;
+  const num = (id: string) => {
+    const v = parseFloat($(id).value);
+    return Number.isFinite(v) ? v : 0;
+  };
+  const usd = (v: number, decimals = 2) =>
+    '$' + v.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+
+  function update() {
+    const fixedMonthly = num('truck') + num('insurance') + num('permits') + num('otherfixed');
+    const mpg = Math.max(num('mpg'), 0.1);
+    const fuelPerMile = num('fuelprice') / mpg;
+    const variablePerMile = fuelPerMile + num('maintenance') + num('tires');
+    const miles = Math.max(num('miles'), 1);
+    const fixedPerMile = fixedMonthly / miles;
+    const cpm = fixedPerMile + variablePerMile;
+    const monthlyTotal = fixedMonthly + variablePerMile * miles;
+
+    $('out-cpm').textContent = usd(cpm);
+    $('out-fixed').textContent = usd(fixedPerMile);
+    $('out-variable').textContent = usd(variablePerMile);
+    $('out-monthly').textContent = usd(monthlyTotal, 0);
+
+    const rate = num('rate');
+    const profitEl = $('out-profit');
+    if (rate > 0) {
+      const perMile = rate - cpm;
+      const perMonth = perMile * miles;
+      profitEl.textContent = `${usd(perMile)}/mi (${usd(perMonth, 0)}/month)`;
+      profitEl.className = perMile >= 0 ? 'profit-pos' : 'profit-neg';
+    } else {
+      profitEl.textContent = '—';
+      profitEl.className = '';
+    }
+  }
+
+  document.getElementById('cpm-form')!.addEventListener('input', update);
+  update();
+</script>
