@@ -1,0 +1,99 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import { relatedFor } from '../data/tools';
+
+const faqs = [
+  {
+    q: 'What credit terms are typical for a semi truck loan in 2026?',
+    a: 'Established owner-operators with good credit see roughly 7–12% APR over 48–60 months. First-time buyers or bruised credit can land in the 15–25% range, often with a bigger down payment required. Used trucks usually price 2–4 points above new.',
+  },
+  {
+    q: 'How much should I put down on a truck?',
+    a: 'Lenders commonly want 10–25% down. Beyond approval, a bigger down payment protects you from being upside-down: trucks depreciate fast, and owing more than the truck is worth traps you if freight softens and you need out.',
+  },
+  {
+    q: 'Is the payment the real cost of the truck?',
+    a: 'No — the payment is just the financing. Add insurance, maintenance, tires and permits, and a $2,800 payment truck really costs $5,000+ a month to keep on the road. Run your full numbers in the cost per mile calculator.',
+  },
+  {
+    q: 'Lease or buy?',
+    a: 'A loan builds equity and usually costs less in total; a lease keeps payments and the walk-away option flexible. Be careful with lease-purchase programs tied to one carrier — the effective interest rate is often far above bank financing when you do this math on it.',
+  },
+];
+---
+
+<ToolLayout
+  metaTitle="Semi Truck Payment Calculator — Monthly Payment & Total Interest | Haul-Calc"
+  description="Free truck payment calculator: price, down payment, APR and term in — monthly payment, total interest and all-in cost out. Know the damage before you sign."
+  h1="Truck Payment Calculator"
+  intro="Price, down payment, rate and term — see the monthly payment, the total interest, and what the truck really costs by the last payment."
+  faqs={faqs}
+  related={relatedFor('truck-payment-calculator')}
+>
+  <form class="tool" id="pay-form" slot="tool" autocomplete="off">
+    <fieldset>
+      <legend>The deal</legend>
+      <div class="field">
+        <label for="price">Truck price ($)</label>
+        <input type="number" id="price" value="165000" min="0" step="1000" inputmode="numeric" />
+      </div>
+      <div class="field">
+        <label for="down">Down payment ($)</label>
+        <input type="number" id="down" value="30000" min="0" step="1000" inputmode="numeric" />
+      </div>
+      <div class="field">
+        <label for="apr">Interest rate (APR %)</label>
+        <input type="number" id="apr" value="9.5" min="0" max="40" step="0.1" inputmode="decimal" />
+      </div>
+      <div class="field">
+        <label for="term">Term (months)</label>
+        <input type="number" id="term" value="60" min="1" max="120" step="1" inputmode="numeric" />
+      </div>
+    </fieldset>
+
+    <div class="results" aria-live="polite">
+      <div class="label">Monthly payment</div>
+      <div class="big" id="out-payment">$0</div>
+      <div class="row"><span>Amount financed</span><strong id="out-financed">$0</strong></div>
+      <div class="row"><span>Total interest paid</span><strong id="out-interest">$0</strong></div>
+      <div class="row"><span>Total of payments</span><strong id="out-totalpay">$0</strong></div>
+      <div class="row"><span>All-in cost (down + payments)</span><strong id="out-allin">$0</strong></div>
+    </div>
+  </form>
+
+  <section slot="content">
+    <h2>How this calculator works</h2>
+    <p><strong>Amount financed</strong> = price − down payment.</p>
+    <p><strong>Monthly payment</strong> uses the standard amortization formula: P × r ÷ (1 − (1 + r)<sup>−n</sup>), where r is the monthly rate (APR ÷ 12) and n the number of months.</p>
+    <p><strong>Total interest</strong> is what financing itself costs you — worth staring at before stretching the term: going from 48 to 72 months drops the payment but can nearly double the interest paid.</p>
+    <p>Rule of thumb many owner-operators use: the payment should stay under 25% of your average monthly gross, or one soft freight month starts a hole that is hard to climb out of.</p>
+  </section>
+</ToolLayout>
+
+<script>
+  const $ = (id: string) => document.getElementById(id) as HTMLInputElement;
+  const num = (id: string) => {
+    const v = parseFloat($(id).value);
+    return Number.isFinite(v) ? v : 0;
+  };
+  const usd = (v: number, d = 0) =>
+    '$' + v.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+
+  function update() {
+    const principal = Math.max(num('price') - num('down'), 0);
+    const n = Math.max(num('term'), 1);
+    const r = num('apr') / 100 / 12;
+    const payment = r > 0 ? (principal * r) / (1 - Math.pow(1 + r, -n)) : principal / n;
+    const totalPay = payment * n;
+    const interest = totalPay - principal;
+
+    $('out-payment').textContent = usd(payment, 2);
+    $('out-financed').textContent = usd(principal);
+    $('out-interest').textContent = usd(interest);
+    $('out-totalpay').textContent = usd(totalPay);
+    $('out-allin').textContent = usd(totalPay + num('down'));
+  }
+
+  document.getElementById('pay-form')!.addEventListener('input', update);
+  update();
+</script>

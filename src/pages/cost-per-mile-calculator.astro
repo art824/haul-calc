@@ -1,5 +1,6 @@
 ---
 import ToolLayout from '../layouts/ToolLayout.astro';
+import { relatedFor } from '../data/tools';
 
 const faqs = [
   {
@@ -24,9 +25,7 @@ const faqs = [
   },
 ];
 
-const related = [
-  { href: '/', label: 'All trucking calculators' },
-];
+const related = relatedFor('cost-per-mile-calculator');
 ---
 
 <ToolLayout

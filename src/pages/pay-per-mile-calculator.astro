@@ -1,0 +1,91 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import { relatedFor } from '../data/tools';
+
+const faqs = [
+  {
+    q: 'What is average truck driver pay per mile in 2026?',
+    a: 'Most company drivers earn between $0.50 and $0.75 per mile, with experienced OTR drivers and specialized freight (tanker, flatbed, hazmat) reaching $0.80+ per mile. Teams typically split a higher combined rate.',
+  },
+  {
+    q: 'How many miles does an OTR driver run per week?',
+    a: 'A realistic OTR week is 2,200–2,800 miles under hours-of-service limits. Recruiters sometimes quote 3,000+ — before you count on it, check whether the fleet actually turns that kind of freight week after week.',
+  },
+  {
+    q: 'How much is a 1 cent per mile raise worth?',
+    a: 'At 2,500 miles a week, one extra cent per mile is $25/week — $1,300 a year. A 5-cent bump is $6,500 a year. Always negotiate CPM in whole cents, and check the raise against miles actually dispatched.',
+  },
+  {
+    q: 'Is CPM pay better than percentage pay?',
+    a: 'CPM pays steady regardless of freight rates; percentage pay (usually 25–30% of the linehaul) wins when rates are strong and loses when they are soft. Run both against the same expected weekly miles and revenue to compare offers honestly.',
+  },
+];
+---
+
+<ToolLayout
+  metaTitle="Truck Driver Pay Per Mile Calculator — Weekly & Yearly Gross | Haul-Calc"
+  description="Free CPM pay calculator for truck drivers: rate per mile and weekly miles in — weekly, monthly and yearly gross out, plus what a raise is worth."
+  h1="Driver Pay Per Mile Calculator"
+  intro="Your cents per mile and weekly miles, turned into weekly, monthly and yearly gross — plus what one more cent per mile would put in your pocket."
+  faqs={faqs}
+  related={relatedFor('pay-per-mile-calculator')}
+>
+  <form class="tool" id="cpmpay-form" slot="tool" autocomplete="off">
+    <fieldset>
+      <legend>Your pay</legend>
+      <div class="field">
+        <label for="rate">Pay rate ($/mile)</label>
+        <input type="number" id="rate" value="0.62" min="0" step="0.01" inputmode="decimal" />
+      </div>
+      <div class="field">
+        <label for="miles">Miles per week</label>
+        <input type="number" id="miles" value="2500" min="0" step="50" inputmode="numeric" />
+      </div>
+      <div class="field">
+        <label for="weeks">Weeks worked per year<span class="hint">counting home time</span></label>
+        <input type="number" id="weeks" value="50" min="1" max="52" step="1" inputmode="numeric" />
+      </div>
+      <div class="field">
+        <label for="extras">Other weekly pay ($)<span class="hint">stop pay, detention, bonuses</span></label>
+        <input type="number" id="extras" value="0" min="0" step="10" inputmode="decimal" />
+      </div>
+    </fieldset>
+
+    <div class="results" aria-live="polite">
+      <div class="label">Yearly gross</div>
+      <div class="big" id="out-year">$0</div>
+      <div class="row"><span>Weekly gross</span><strong id="out-week">$0</strong></div>
+      <div class="row"><span>Monthly average</span><strong id="out-month">$0</strong></div>
+      <div class="row"><span>+1¢/mile is worth</span><strong id="out-raise" class="profit-pos">$0/yr</strong></div>
+    </div>
+  </form>
+
+  <section slot="content">
+    <h2>How this calculator works</h2>
+    <p><strong>Weekly gross</strong> = rate × weekly miles + other weekly pay. <strong>Yearly</strong> multiplies by the weeks you actually work; <strong>monthly</strong> is the yearly figure ÷ 12.</p>
+    <p>This is gross pay — before taxes, insurance and any lease deductions. If you're comparing a company CPM offer against running under your own authority, put your would-be costs into the cost per mile calculator and compare what's left, not the top-line number.</p>
+  </section>
+</ToolLayout>
+
+<script>
+  const $ = (id: string) => document.getElementById(id) as HTMLInputElement;
+  const num = (id: string) => {
+    const v = parseFloat($(id).value);
+    return Number.isFinite(v) ? v : 0;
+  };
+  const usd = (v: number) => '$' + v.toLocaleString('en-US', { maximumFractionDigits: 0 });
+
+  function update() {
+    const weekly = num('rate') * num('miles') + num('extras');
+    const yearly = weekly * num('weeks');
+    const raise = 0.01 * num('miles') * num('weeks');
+
+    $('out-week').textContent = usd(weekly);
+    $('out-month').textContent = usd(yearly / 12);
+    $('out-year').textContent = usd(yearly);
+    $('out-raise').textContent = usd(raise) + '/yr';
+  }
+
+  document.getElementById('cpmpay-form')!.addEventListener('input', update);
+  update();
+</script>

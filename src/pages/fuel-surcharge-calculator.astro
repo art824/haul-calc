@@ -1,0 +1,88 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import { relatedFor } from '../data/tools';
+
+const faqs = [
+  {
+    q: 'How is a fuel surcharge calculated?',
+    a: 'The standard formula: (current diesel price − base fuel price) ÷ truck MPG = surcharge per mile. Example: ($3.60 − $1.25) ÷ 6.0 = $0.39 per mile. Multiply by the trip miles for the total surcharge.',
+  },
+  {
+    q: 'What base fuel price should I use?',
+    a: '$1.20–$1.25 per gallon is the traditional industry baseline — the fuel cost already assumed inside the linehaul rate. Whatever number you use, it must be written into the contract; the base is a negotiation point, not a law.',
+  },
+  {
+    q: 'Where does the "current price" come from?',
+    a: 'Most contracts peg it to the DOE weekly national average diesel price, published every Monday by the EIA. Using a public index keeps both sides honest — nobody argues with the pump receipt lottery.',
+  },
+  {
+    q: 'Why 6 MPG in the formula when my truck does better?',
+    a: 'The divisor is a contractual assumption, not your actual MPG. 6.0 is the common standard. If your truck really runs 7.5 MPG, a 6.0-based surcharge over-recovers your fuel cost — that spread is yours to keep, and it rewards efficient equipment.',
+  },
+];
+---
+
+<ToolLayout
+  metaTitle="Fuel Surcharge Calculator — FSC Per Mile & Per Trip | Haul-Calc"
+  description="Free fuel surcharge calculator: DOE diesel average, base price and MPG in — surcharge per mile and per trip out. The standard FSC formula, instant."
+  h1="Fuel Surcharge Calculator"
+  intro="The standard FSC formula: (current diesel − base price) ÷ MPG. See the fair surcharge per mile and for the whole trip."
+  faqs={faqs}
+  related={relatedFor('fuel-surcharge-calculator')}
+>
+  <form class="tool" id="fsc-form" slot="tool" autocomplete="off">
+    <fieldset>
+      <legend>The formula inputs</legend>
+      <div class="field">
+        <label for="current">Current diesel price ($/gal)<span class="hint">DOE weekly average</span></label>
+        <input type="number" id="current" value="3.60" min="0" step="0.05" inputmode="decimal" />
+      </div>
+      <div class="field">
+        <label for="base">Base fuel price ($/gal)<span class="hint">$1.25 is the classic baseline</span></label>
+        <input type="number" id="base" value="1.25" min="0" step="0.05" inputmode="decimal" />
+      </div>
+      <div class="field">
+        <label for="mpg">Contract MPG divisor<span class="hint">6.0 is standard</span></label>
+        <input type="number" id="mpg" value="6.0" min="1" step="0.1" inputmode="decimal" />
+      </div>
+      <div class="field">
+        <label for="miles">Trip miles (optional)</label>
+        <input type="number" id="miles" value="1000" min="0" step="10" inputmode="numeric" />
+      </div>
+    </fieldset>
+
+    <div class="results" aria-live="polite">
+      <div class="label">Fuel surcharge per mile</div>
+      <div class="big" id="out-fsc">$0.00</div>
+      <div class="row"><span>Surcharge for this trip</span><strong id="out-trip">$0</strong></div>
+      <div class="row"><span>Price spread over base</span><strong id="out-spread">$0.00/gal</strong></div>
+    </div>
+  </form>
+
+  <section slot="content">
+    <h2>How this calculator works</h2>
+    <p><strong>FSC per mile</strong> = (current diesel price − base price) ÷ contract MPG. When diesel is at or below the base, the surcharge is zero — the linehaul rate already covers fuel that cheap.</p>
+    <p><strong>Trip surcharge</strong> = FSC per mile × miles. On percentage-of-linehaul freight, the same recovery is often folded into the rate — this tool shows what that fold-in should be worth so you can tell whether the "all-in" rate actually covers fuel.</p>
+  </section>
+</ToolLayout>
+
+<script>
+  const $ = (id: string) => document.getElementById(id) as HTMLInputElement;
+  const num = (id: string) => {
+    const v = parseFloat($(id).value);
+    return Number.isFinite(v) ? v : 0;
+  };
+
+  function update() {
+    const spread = Math.max(num('current') - num('base'), 0);
+    const fsc = spread / Math.max(num('mpg'), 0.1);
+    const trip = fsc * num('miles');
+
+    $('out-fsc').textContent = '$' + fsc.toFixed(2);
+    $('out-spread').textContent = '$' + spread.toFixed(2) + '/gal';
+    $('out-trip').textContent = '$' + trip.toLocaleString('en-US', { maximumFractionDigits: 0 });
+  }
+
+  document.getElementById('fsc-form')!.addEventListener('input', update);
+  update();
+</script>

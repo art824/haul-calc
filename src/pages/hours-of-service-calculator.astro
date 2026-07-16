@@ -1,0 +1,106 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import { relatedFor } from '../data/tools';
+
+const faqs = [
+  {
+    q: 'How does the 70-hour/8-day rule work?',
+    a: 'You may not drive after accumulating 70 on-duty hours in any rolling 8-day window (carriers operating every day of the week). Today’s available hours = 70 minus your on-duty total from the previous 7 days. Each midnight, the oldest day drops off the window and those hours come back — that’s the “recap”.',
+  },
+  {
+    q: 'What is the difference between 70/8 and 60/7?',
+    a: '60/7 (60 hours in 7 days) applies to carriers that do NOT operate every day of the week; 70/8 applies to those that do. Most OTR operations run 70/8. The math is identical — only the cap and window size change.',
+  },
+  {
+    q: 'How does a 34-hour restart work?',
+    a: '34 consecutive hours off-duty resets your rolling total to zero, giving you a fresh 70 (or 60). It is optional — many drivers run on recaps instead of restarting, especially when daily recap hours are healthy.',
+  },
+  {
+    q: 'Does this replace my ELD?',
+    a: 'No. Your ELD is the legal record. This is a planning tool: it shows what the week ahead looks like so you can decide whether to run recaps or take a 34 — before you are stuck with a 2-hour day 600 miles from home.',
+  },
+  {
+    q: 'What other limits apply besides the 70?',
+    a: 'Daily limits still cap every shift: 11 hours driving, inside a 14-hour on-duty window, with a 30-minute break required after 8 cumulative hours of driving. Your available time today is the smaller of the cycle hours and those daily limits.',
+  },
+];
+---
+
+<ToolLayout
+  metaTitle="Hours of Service Calculator — 70/8 Recap Hours | Haul-Calc"
+  description="Free HOS 70-hour/8-day recap calculator: enter your last 7 days of on-duty hours, see hours available today and what recaps back tomorrow. 60/7 supported."
+  h1="Hours of Service Calculator (70/8 Recap)"
+  intro="Enter your on-duty hours for the last 7 days. See what you have left on the cycle today — and how many hours recap back at midnight."
+  faqs={faqs}
+  related={relatedFor('hours-of-service-calculator')}
+>
+  <form class="tool" id="hos-form" slot="tool" autocomplete="off">
+    <fieldset>
+      <legend>Your cycle</legend>
+      <div class="field">
+        <label for="cycle">Rule</label>
+        <select id="cycle">
+          <option value="70" selected>70 hours / 8 days</option>
+          <option value="60">60 hours / 7 days</option>
+        </select>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>On-duty hours, last 7 days</legend>
+      <div class="field"><label for="d1">Yesterday</label><input type="number" id="d1" value="10" min="0" max="24" step="0.25" inputmode="decimal" /></div>
+      <div class="field"><label for="d2">2 days ago</label><input type="number" id="d2" value="11" min="0" max="24" step="0.25" inputmode="decimal" /></div>
+      <div class="field"><label for="d3">3 days ago</label><input type="number" id="d3" value="9" min="0" max="24" step="0.25" inputmode="decimal" /></div>
+      <div class="field"><label for="d4">4 days ago</label><input type="number" id="d4" value="10.5" min="0" max="24" step="0.25" inputmode="decimal" /></div>
+      <div class="field"><label for="d5">5 days ago</label><input type="number" id="d5" value="8" min="0" max="24" step="0.25" inputmode="decimal" /></div>
+      <div class="field"><label for="d6">6 days ago</label><input type="number" id="d6" value="0" min="0" max="24" step="0.25" inputmode="decimal" /></div>
+      <div class="field"><label for="d7">7 days ago <span class="hint">ignored on 60/7</span></label><input type="number" id="d7" value="10" min="0" max="24" step="0.25" inputmode="decimal" /></div>
+    </fieldset>
+
+    <div class="results" aria-live="polite">
+      <div class="label">Cycle hours available today</div>
+      <div class="big" id="out-avail">0.0 h</div>
+      <div class="row"><span>Hours used in window</span><strong id="out-used">0</strong></div>
+      <div class="row"><span>Practical limit today</span><strong id="out-practical">—</strong></div>
+      <div class="row"><span>Recap coming back at midnight</span><strong id="out-recap" class="profit-pos">0.0 h</strong></div>
+    </div>
+  </form>
+
+  <section slot="content">
+    <h2>How this calculator works</h2>
+    <p><strong>Hours available</strong> = cycle limit (70 or 60) − on-duty hours in the rolling window (previous 7 days for 70/8, previous 6 for 60/7).</p>
+    <p><strong>Practical limit today</strong>: even with 30 cycle hours available, one shift is still capped at 11 driving hours inside a 14-hour window — the tool shows whichever is smaller.</p>
+    <p><strong>Recap</strong>: at midnight the oldest day falls out of the window and its hours return to your cycle. Planning recaps well is the difference between running steady all week and sitting out a surprise 2-hour day.</p>
+    <div class="note">
+      Planning tool only — your ELD is the legal record. Split-sleeper, adverse conditions and short-haul exceptions are not modeled.
+    </div>
+  </section>
+</ToolLayout>
+
+<script>
+  const $ = (id: string) => document.getElementById(id) as HTMLInputElement;
+  const num = (id: string) => {
+    const v = parseFloat($(id).value);
+    return Number.isFinite(v) ? v : 0;
+  };
+
+  function update() {
+    const cycle = parseInt(($('cycle') as unknown as HTMLSelectElement).value, 10);
+    const days = [num('d1'), num('d2'), num('d3'), num('d4'), num('d5'), num('d6'), num('d7')];
+    const windowDays = cycle === 70 ? 7 : 6;
+    const used = days.slice(0, windowDays).reduce((s, v) => s + v, 0);
+    const avail = Math.max(cycle - used, 0);
+    const practical = Math.min(avail, 14);
+    const oldest = days[windowDays - 1];
+
+    $('out-used').textContent = used.toFixed(1) + ' h';
+    $('out-avail').textContent = avail.toFixed(1) + ' h';
+    $('out-practical').textContent =
+      practical.toFixed(1) + ' h on-duty (11 h driving max)';
+    $('out-recap').textContent = oldest.toFixed(1) + ' h';
+  }
+
+  document.getElementById('hos-form')!.addEventListener('input', update);
+  document.getElementById('cycle')!.addEventListener('change', update);
+  update();
+</script>

@@ -1,0 +1,219 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import { relatedFor } from '../data/tools';
+
+const faqs = [
+  {
+    q: 'How is IFTA tax calculated?',
+    a: 'First find your fleet MPG: total miles in all states divided by total gallons purchased. For each state, divide the miles you ran there by your fleet MPG to get taxable gallons, subtract the gallons you actually bought in that state, and multiply the difference by that state’s tax rate. States where you bought more fuel than you burned generate a credit; the sum of every state is what you owe (or get back) for the quarter.',
+  },
+  {
+    q: 'When are IFTA returns due in 2026?',
+    a: 'IFTA is filed quarterly: April 30 (Q1, Jan–Mar), July 31 (Q2, Apr–Jun), November 2 (Q3, Jul–Sep, since Oct 31 falls on a weekend) and February 1, 2027 (Q4, Oct–Dec). File even for quarters with zero miles — skipping a return triggers penalties.',
+  },
+  {
+    q: 'Why do Kentucky and Virginia cost extra?',
+    a: 'Both states charge a surcharge on top of the regular fuel tax. The surcharge is billed on every gallon you burn in the state and cannot be offset by fuel purchases there. This calculator adds those surcharge lines automatically.',
+  },
+  {
+    q: 'Why does Oregon show a $0.00 rate?',
+    a: 'Oregon does not tax diesel through IFTA — it runs a separate weight-mile tax program that you file directly with the state. Miles driven in Oregon still count toward your fleet MPG, which is why you should still enter them.',
+  },
+  {
+    q: 'Can buying cheap fuel in the wrong state increase my IFTA bill?',
+    a: 'Yes. IFTA settles tax by where you burn fuel, not where you buy it. Buying in a low-tax state and burning the fuel in a high-tax state leaves the difference due at filing time. The smart comparison is pump price minus that state’s tax rate.',
+  },
+];
+
+// IFTA, Inc. tax rate matrix — diesel, Q2 2026. Surcharge column: KY, VA.
+// Update quarterly from https://www.iftach.org/taxmatrix4/
+const STATES: [string, string, number, number][] = [
+  ['AL', 'Alabama', 0.31, 0],
+  ['AZ', 'Arizona', 0.26, 0],
+  ['AR', 'Arkansas', 0.285, 0],
+  ['CA', 'California', 0.971, 0],
+  ['CO', 'Colorado', 0.335, 0],
+  ['CT', 'Connecticut', 0.499, 0],
+  ['DE', 'Delaware', 0.22, 0],
+  ['FL', 'Florida', 0.4097, 0],
+  ['GA', 'Georgia', 0.373, 0],
+  ['ID', 'Idaho', 0.32, 0],
+  ['IL', 'Illinois', 0.738, 0],
+  ['IN', 'Indiana', 0.63, 0],
+  ['IA', 'Iowa', 0.325, 0],
+  ['KS', 'Kansas', 0.26, 0],
+  ['KY', 'Kentucky', 0.22, 0.105],
+  ['LA', 'Louisiana', 0.2, 0],
+  ['ME', 'Maine', 0.312, 0],
+  ['MD', 'Maryland', 0.4675, 0],
+  ['MA', 'Massachusetts', 0.24, 0],
+  ['MI', 'Michigan', 0.524, 0],
+  ['MN', 'Minnesota', 0.326, 0],
+  ['MS', 'Mississippi', 0.18, 0],
+  ['MO', 'Missouri', 0.295, 0],
+  ['MT', 'Montana', 0.2975, 0],
+  ['NE', 'Nebraska', 0.318, 0],
+  ['NV', 'Nevada', 0.27, 0],
+  ['NH', 'New Hampshire', 0.222, 0],
+  ['NJ', 'New Jersey', 0.561, 0],
+  ['NM', 'New Mexico', 0.21, 0],
+  ['NY', 'New York', 0.3805, 0],
+  ['NC', 'North Carolina', 0.41, 0],
+  ['ND', 'North Dakota', 0.23, 0],
+  ['OH', 'Ohio', 0.47, 0],
+  ['OK', 'Oklahoma', 0.19, 0],
+  ['OR', 'Oregon', 0, 0],
+  ['PA', 'Pennsylvania', 0.741, 0],
+  ['RI', 'Rhode Island', 0.4, 0],
+  ['SC', 'South Carolina', 0.28, 0],
+  ['SD', 'South Dakota', 0.28, 0],
+  ['TN', 'Tennessee', 0.27, 0],
+  ['TX', 'Texas', 0.2, 0],
+  ['UT', 'Utah', 0.379, 0],
+  ['VT', 'Vermont', 0.31, 0],
+  ['VA', 'Virginia', 0.327, 0.143],
+  ['WA', 'Washington', 0.584, 0],
+  ['WV', 'West Virginia', 0.357, 0],
+  ['WI', 'Wisconsin', 0.329, 0],
+  ['WY', 'Wyoming', 0.24, 0],
+];
+---
+
+<ToolLayout
+  metaTitle="IFTA Calculator — Free Fuel Tax Calculator with Q2 2026 Rates"
+  description="Free IFTA fuel tax calculator for owner-operators. Enter miles and gallons by state — current diesel tax rates for all 48 states built in, Kentucky and Virginia surcharges included. Runs in your browser."
+  h1="IFTA Fuel Tax Calculator"
+  intro="Enter your miles and fuel purchases by state. The calculator applies each state's current diesel rate and shows what you owe (or your credit) this quarter. Free and private — nothing is stored."
+  faqs={faqs}
+  related={relatedFor('ifta-calculator')}
+>
+  <form class="tool" id="ifta-form" slot="tool" autocomplete="off">
+    <p style="margin-top:0;">
+      <span class="badge">Q2 2026 rates</span>
+      <span style="font-size:0.85rem;color:var(--muted);"> diesel, all 48 IFTA states · KY &amp; VA surcharges included</span>
+    </p>
+
+    <fieldset>
+      <legend>Miles &amp; fuel by state</legend>
+      <div class="cols-head" aria-hidden="true">
+        <span>State</span><span>Miles</span><span>Gallons bought</span><span></span>
+      </div>
+      <div id="rows"></div>
+      <p style="margin:0.6rem 0 0;">
+        <button type="button" class="btn secondary" id="add-row">+ Add state</button>
+      </p>
+    </fieldset>
+
+    <div class="results" aria-live="polite">
+      <div class="label">Estimated IFTA balance this quarter</div>
+      <div class="big" id="out-total">$0.00</div>
+      <div class="row"><span>Fleet MPG</span><strong id="out-mpg">—</strong></div>
+      <div class="row"><span>Total miles</span><strong id="out-miles">0</strong></div>
+      <div class="row"><span>Total gallons purchased</span><strong id="out-gallons">0</strong></div>
+      <div style="overflow-x:auto;margin-top:0.6rem;">
+        <table class="mini-table" id="out-table" hidden>
+          <thead>
+            <tr><th>State</th><th style="text-align:right;">Taxable gal</th><th style="text-align:right;">Net gal</th><th style="text-align:right;">Tax</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </form>
+
+  <section slot="content">
+    <div class="note">
+      Rates are the official IFTA, Inc. diesel matrix for <strong>Q2 2026</strong>.
+      Always confirm against <a href="https://www.iftach.org/taxmatrix4/" rel="nofollow noopener">iftach.org</a>
+      before filing — rates change every quarter.
+    </div>
+    <h2>How the math works</h2>
+    <p><strong>Fleet MPG</strong> = total miles in every state ÷ total gallons purchased everywhere.</p>
+    <p><strong>Taxable gallons per state</strong> = miles in that state ÷ fleet MPG — the fuel you burned there, regardless of where you bought it.</p>
+    <p><strong>Net taxable gallons</strong> = taxable gallons − gallons purchased in that state. Positive means you owe that state; negative is a credit.</p>
+    <p><strong>Tax per state</strong> = net gallons × that state's rate. Kentucky and Virginia also charge a surcharge on every gallon burned there, with no credit for purchases. The quarterly balance is the sum across all states.</p>
+    <p>Oregon collects through its own weight-mile program instead of IFTA — its rate is $0.00 here, but Oregon miles still count toward fleet MPG.</p>
+  </section>
+</ToolLayout>
+
+<script define:vars={{ STATES }}>
+  const rowsEl = document.getElementById('rows');
+  const usd = (v) =>
+    (v < 0 ? '-$' : '$') + Math.abs(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  function makeRow(code = '', miles = '', gallons = '') {
+    const row = document.createElement('div');
+    row.className = 'state-row';
+    const options = STATES.map(
+      ([c, name]) => `<option value="${c}" ${c === code ? 'selected' : ''}>${name}</option>`
+    ).join('');
+    row.innerHTML = `
+      <select aria-label="State"><option value="">State…</option>${options}</select>
+      <input type="number" aria-label="Miles" min="0" step="1" inputmode="numeric" placeholder="0" value="${miles}" />
+      <input type="number" aria-label="Gallons purchased" min="0" step="1" inputmode="decimal" placeholder="0" value="${gallons}" />
+      <button type="button" class="del" aria-label="Remove state">×</button>
+    `;
+    row.querySelector('.del').addEventListener('click', () => {
+      row.remove();
+      update();
+    });
+    rowsEl.appendChild(row);
+  }
+
+  function update() {
+    const rows = [...rowsEl.querySelectorAll('.state-row')]
+      .map((r) => {
+        const code = r.querySelector('select').value;
+        const inputs = r.querySelectorAll('input');
+        const miles = parseFloat(inputs[0].value) || 0;
+        const gallons = parseFloat(inputs[1].value) || 0;
+        return { code, miles, gallons };
+      })
+      .filter((r) => r.code);
+
+    const totalMiles = rows.reduce((s, r) => s + r.miles, 0);
+    const totalGallons = rows.reduce((s, r) => s + r.gallons, 0);
+    const mpg = totalGallons > 0 ? totalMiles / totalGallons : 0;
+
+    document.getElementById('out-miles').textContent = totalMiles.toLocaleString('en-US');
+    document.getElementById('out-gallons').textContent = totalGallons.toLocaleString('en-US');
+    document.getElementById('out-mpg').textContent = mpg > 0 ? mpg.toFixed(2) : '—';
+
+    const table = document.getElementById('out-table');
+    const tbody = table.querySelector('tbody');
+    tbody.innerHTML = '';
+    let total = 0;
+
+    if (mpg > 0) {
+      for (const r of rows) {
+        const st = STATES.find(([c]) => c === r.code);
+        if (!st) continue;
+        const [code, , rate, surcharge] = st;
+        const taxable = r.miles / mpg;
+        const net = taxable - r.gallons;
+        let tax = net * rate;
+        if (surcharge > 0) tax += taxable * surcharge;
+        total += tax;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${code}${surcharge > 0 ? '*' : ''}</td>
+          <td class="num">${taxable.toFixed(1)}</td>
+          <td class="num">${net.toFixed(1)}</td>
+          <td class="num">${usd(tax)}</td>`;
+        tbody.appendChild(tr);
+      }
+    }
+
+    table.hidden = tbody.children.length === 0;
+    const out = document.getElementById('out-total');
+    out.textContent = usd(total) + (total < 0 ? ' credit' : '');
+  }
+
+  document.getElementById('add-row').addEventListener('click', () => makeRow());
+  rowsEl.addEventListener('input', update);
+  rowsEl.addEventListener('change', update);
+
+  makeRow('TX');
+  makeRow('OK');
+  makeRow('NM');
+  update();
+</script>

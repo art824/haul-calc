@@ -1,0 +1,101 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import { relatedFor } from '../data/tools';
+
+const faqs = [
+  {
+    q: 'What is detention pay in trucking?',
+    a: 'Compensation for time your truck sits at a shipper or receiver beyond the agreed free time (industry standard: 2 hours). After free time expires, detention is billed by the hour until you are loaded or unloaded.',
+  },
+  {
+    q: 'What is a fair detention rate in 2026?',
+    a: 'Most owner-operators bill $50–$100 per hour. Your floor should be what the truck earns rolling: if you average $2.20/mile at 50 mph, an hour of sitting costs you about $110 of revenue — bill accordingly.',
+  },
+  {
+    q: 'How do I actually get detention paid?',
+    a: 'Get it in writing on the rate confirmation before you book, document arrival and departure times (ELD screenshots, gate tickets, BOL timestamps), and notify the broker in writing before free time runs out. No paper trail, no detention check.',
+  },
+  {
+    q: 'Does detention time affect my hours of service?',
+    a: 'Yes — time stuck at the dock burns your 14-hour window even if you log it off-duty or sleeper. Long detention can kill the rest of your driving day, which is exactly why it should never be free.',
+  },
+];
+---
+
+<ToolLayout
+  metaTitle="Detention Pay Calculator — What the Dock Owes You | Haul-Calc"
+  description="Free detention pay calculator for truckers: hours at the dock, free time and your hourly rate in — billable detention and lost-revenue comparison out."
+  h1="Detention Pay Calculator"
+  intro="Stuck at the dock? Enter the hours, your free time and your rate — see what to invoice, and what the wait really cost you in revenue."
+  faqs={faqs}
+  related={relatedFor('detention-pay-calculator')}
+>
+  <form class="tool" id="det-form" slot="tool" autocomplete="off">
+    <fieldset>
+      <legend>The wait</legend>
+      <div class="field">
+        <label for="hours">Total hours at the facility</label>
+        <input type="number" id="hours" value="5" min="0" step="0.25" inputmode="decimal" />
+      </div>
+      <div class="field">
+        <label for="free">Free time (hours)<span class="hint">2 is the industry standard</span></label>
+        <input type="number" id="free" value="2" min="0" step="0.5" inputmode="decimal" />
+      </div>
+      <div class="field">
+        <label for="rate">Your detention rate ($/hour)</label>
+        <input type="number" id="rate" value="75" min="0" step="5" inputmode="decimal" />
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>What rolling earns you (for comparison)</legend>
+      <div class="field">
+        <label for="revmile">Average revenue ($/mile)</label>
+        <input type="number" id="revmile" value="2.20" min="0" step="0.05" inputmode="decimal" />
+      </div>
+      <div class="field">
+        <label for="speed">Average speed (mph)</label>
+        <input type="number" id="speed" value="50" min="0" step="1" inputmode="numeric" />
+      </div>
+    </fieldset>
+
+    <div class="results" aria-live="polite">
+      <div class="label">Detention to invoice</div>
+      <div class="big" id="out-pay">$0</div>
+      <div class="row"><span>Billable hours</span><strong id="out-hours">0</strong></div>
+      <div class="row"><span>Revenue lost while sitting</span><strong id="out-lost">$0</strong></div>
+      <div class="row"><span>Invoice covers</span><strong id="out-covers">0%</strong> <span>of lost revenue</span></div>
+    </div>
+  </form>
+
+  <section slot="content">
+    <h2>How this calculator works</h2>
+    <p><strong>Billable hours</strong> = total hours at the facility − free time (never below zero). <strong>Detention pay</strong> = billable hours × your hourly rate.</p>
+    <p><strong>Revenue lost</strong> = total hours × (your $/mile × average mph) — what the truck would have grossed rolling instead of sitting. If your detention rate covers well under 100% of that, the rate is subsidizing slow docks.</p>
+    <p>Detention only gets paid when it's on the rate con and documented. Arrival/departure timestamps from your ELD are your best evidence — screenshot them before you leave the gate.</p>
+  </section>
+</ToolLayout>
+
+<script>
+  const $ = (id: string) => document.getElementById(id) as HTMLInputElement;
+  const num = (id: string) => {
+    const v = parseFloat($(id).value);
+    return Number.isFinite(v) ? v : 0;
+  };
+  const usd = (v: number) => '$' + v.toLocaleString('en-US', { maximumFractionDigits: 0 });
+
+  function update() {
+    const billable = Math.max(num('hours') - num('free'), 0);
+    const pay = billable * num('rate');
+    const lost = num('hours') * num('revmile') * num('speed');
+    const covers = lost > 0 ? (pay / lost) * 100 : 0;
+
+    $('out-hours').textContent = billable.toFixed(2).replace(/\.00$/, '');
+    $('out-pay').textContent = usd(pay);
+    $('out-lost').textContent = usd(lost);
+    $('out-covers').textContent = covers.toFixed(0) + '%';
+  }
+
+  document.getElementById('det-form')!.addEventListener('input', update);
+  update();
+</script>

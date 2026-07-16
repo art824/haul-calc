@@ -63,3 +63,28 @@ Cada entrada: data, decisão, justificativa em 1 linha.
 - **Primeira ferramenta = Cost Per Mile Calculator** (não a IFTA, apesar do volume maior). Motivo: é matemática pura sem dependência de dados externos — a IFTA exige tabela de alíquotas por estado atualizada trimestralmente, o que conflita com a restrição de manutenção zero. Decidir na Fase 2 como tratar a IFTA (provável: tabela embutida com nota "last updated" + atualização trimestral de ~15min, 4x/ano — custo aceitável pelo termo-âncora de ~5.000 buscas/mês).
 
 **Verificado:** build estático ok (2 páginas + sitemap), cálculo conferido manualmente, reatividade testada no navegador, schemas WebApplication + FAQPage presentes no HTML.
+
+---
+
+## 2026-07-16 — Decisão C: as 10 primeiras ferramentas (construídas)
+
+**Decisão:** Arthur pediu execução completa do site de uma vez (antecipando a Fase 2). As 10 ferramentas, escolhidas pelos dados de keyword coletados (volume × formato ferramenta):
+
+1. `/cost-per-mile-calculator` — trucking cost per mile calculator (~500/mês) + truckers calculator
+2. `/ifta-calculator` — **âncora**: ifta calculator + ifta tax calculator (~5.000/mês cada) + free ifta calculator, ifta mileage calculator (~500 cada)
+3. `/load-profit-calculator` — trucking rate calculator (~500), truck load calculator (~500)
+4. `/fuel-cost-calculator` — truck fuel cost calculator (~500), semi truck fuel/gas calculator (~500 cada)
+5. `/per-diem-calculator` — trucking per diem calculator (cluster per diem; rates IRS 2026: $80/$86, 75% parcial, 80% dedutível)
+6. `/truck-payment-calculator` — financiamento (amortização padrão)
+7. `/pay-per-mile-calculator` — truck driver pay per mile calculator (~500), trucker pay calculator (~500)
+8. `/detention-pay-calculator` — detention pay/time calculator (baixo volume, mas dor real e zero concorrência de ferramenta)
+9. `/fuel-surcharge-calculator` — trucking fuel surcharge calculator
+10. `/hours-of-service-calculator` — dot hours of service calculator (100–1.000), recap 70/8 e 60/7
+
+**Descartado:** truck toll calculator (~500/mês) — exigiria API de rotas/pedágio paga, viola a proibição de dependência paga no free tier. Reavaliar na Fase 6 como recurso pro.
+
+**IFTA — fonte de dados:** tabela diesel Q2 2026 embutida (48 estados + surcharges KY/VA), cruzada entre 2 fontes independentes (freeiftacalculator.com e fleetcollect.net; divergências pequenas em CO/CT/MS resolvidas pela fonte mais precisa + histórico; MS fixado em 0.180). Disclaimer visível na página apontando iftach.org. **Manutenção assumida: atualizar a tabela 4x/ano (~15 min) — única exceção consciente à regra de manutenção zero, justificada pelo termo-âncora.** Oregon = $0 (weight-mile, explicado na página). Províncias canadenses fora do v1.
+
+**Design (identidade):** público é caminhoneiro autônomo americano, não usuário de SaaS — paleta "asphalt & diesel" (grafite #22262d, âmbar/laranja segurança #f5a623/#e87511, fundo creme quente), faixa hazard diagonal como assinatura visual, tipografia system bold (zero fontes externas = performance), inputs de 46px+ (uso com luva/polegar no celular), resultados em painel escuro com número grande âmbar. Logo SVG inline (caminhão estilizado) + favicon SVG data-URI. Zero imagens, zero libs.
+
+**Verificação:** build 11 páginas ok; as 10 calculadoras testadas no navegador com casos calculados à mão — todas exatas (incl. IFTA com e sem surcharge, amortização, per diem, recap HOS). Zero erros de console.

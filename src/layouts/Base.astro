@@ -9,6 +9,12 @@ interface Props {
 
 const { title, description, schema = [] } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+
+const favicon =
+  "data:image/svg+xml," +
+  encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#22262d"/><path d="M4 20h13v-9h4.5l4.5 5v4h2v3h-3a3 3 0 0 1-6 0h-6a3 3 0 0 1-6 0H4z" fill="#f5a623"/></svg>`
+  );
 ---
 
 <!doctype html>
@@ -19,6 +25,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="icon" href={favicon} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
@@ -32,19 +39,34 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <body>
     <header class="site-header">
       <div class="inner">
-        <a class="brand" href="/">Haul-Calc</a>
-        <span class="tag">free calculators for owner-operators</span>
+        <a class="brand" href="/" aria-label="Haul-Calc home">
+          <svg width="34" height="34" viewBox="0 0 32 32" aria-hidden="true">
+            <rect width="32" height="32" rx="6" fill="#2b3038" />
+            <path d="M4 20h13v-9h4.5l4.5 5v4h2v3h-3a3 3 0 0 1-6 0h-6a3 3 0 0 1-6 0H4z" fill="#f5a623" />
+          </svg>
+          <span>
+            <span class="word">HAUL<em>·</em>CALC</span>
+            <span class="tag">trucking calculators that know your numbers</span>
+          </span>
+        </a>
+        <nav>
+          <a href="/">All calculators</a>
+        </nav>
       </div>
     </header>
+    <div class="hazard" aria-hidden="true"></div>
     <main>
       <slot />
     </main>
     <footer class="site-footer">
       <div class="inner">
         <p>
-          Haul-Calc — free trucking calculators. All tools run in your browser;
-          nothing you type is sent or stored anywhere. Estimates only, not tax,
-          legal, or financial advice.
+          <strong>Haul-Calc</strong> — free calculators built for owner-operators.
+          Every tool runs in your browser: nothing you type is sent, stored, or shared.
+        </p>
+        <p>
+          Numbers are estimates to help you plan — not tax, legal, or financial advice.
+          Verify filings with your accountant or the official source.
         </p>
       </div>
     </footer>

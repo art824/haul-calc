@@ -1,0 +1,96 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import { relatedFor } from '../data/tools';
+
+const faqs = [
+  {
+    q: 'How do I calculate fuel cost for a trip?',
+    a: 'Divide the trip miles by your truck’s MPG to get gallons needed, then multiply by the price per gallon. Example: 600 miles ÷ 6.5 MPG = 92.3 gallons × $3.60 = $332.',
+  },
+  {
+    q: 'What MPG does a semi truck get?',
+    a: 'Most loaded Class 8 trucks run 5.5 to 7.5 MPG. Aerodynamics, speed, terrain and load weight move the number: dropping from 70 to 62 mph alone can add close to 1 MPG. Use your real average from your ELD or fuel receipts, not the brochure number.',
+  },
+  {
+    q: 'How much does idling add to fuel cost?',
+    a: 'A typical semi burns roughly 0.8 gallons per hour at idle. Ten hours of hotel load overnight is about 8 gallons — nearly $29 at $3.60/gal. The optional idle field adds this to your trip total.',
+  },
+  {
+    q: 'Why is my fuel cost per mile the most important number here?',
+    a: 'Fuel is the biggest variable cost in trucking — usually 30–40% of total cost per mile. Knowing your fuel cost per mile lets you quote loads, size fuel surcharges, and spot when a truck problem is quietly burning money.',
+  },
+];
+---
+
+<ToolLayout
+  metaTitle="Truck Fuel Cost Calculator — Trip Fuel in Gallons & Dollars | Haul-Calc"
+  description="Free semi truck fuel cost calculator: distance, MPG and diesel price in — gallons, total cost and fuel cost per mile out. Optional idle burn. Runs in your browser."
+  h1="Truck Fuel Cost Calculator"
+  intro="Distance, MPG and pump price — get gallons, total fuel cost, and cost per mile for the trip. Add idle hours if you run the bunk overnight."
+  faqs={faqs}
+  related={relatedFor('fuel-cost-calculator')}
+>
+  <form class="tool" id="fuel-form" slot="tool" autocomplete="off">
+    <fieldset>
+      <legend>The trip</legend>
+      <div class="field">
+        <label for="miles">Trip distance (miles)</label>
+        <input type="number" id="miles" value="600" min="0" step="10" inputmode="numeric" />
+      </div>
+      <div class="field">
+        <label for="mpg">Truck MPG</label>
+        <input type="number" id="mpg" value="6.5" min="1" step="0.1" inputmode="decimal" />
+      </div>
+      <div class="field">
+        <label for="price">Diesel price ($/gallon)</label>
+        <input type="number" id="price" value="3.60" min="0" step="0.05" inputmode="decimal" />
+      </div>
+      <div class="field">
+        <label for="idle">Idle hours (optional)<span class="hint">≈0.8 gal/hour</span></label>
+        <input type="number" id="idle" value="0" min="0" step="1" inputmode="numeric" />
+      </div>
+    </fieldset>
+
+    <div class="results" aria-live="polite">
+      <div class="label">Trip fuel cost</div>
+      <div class="big" id="out-cost">$0</div>
+      <div class="row"><span>Gallons to drive it</span><strong id="out-gal">0</strong></div>
+      <div class="row"><span>Gallons idling</span><strong id="out-idlegal">0</strong></div>
+      <div class="row"><span>Fuel cost per mile</span><strong id="out-cpm">$0.00</strong></div>
+    </div>
+  </form>
+
+  <section slot="content">
+    <h2>How this calculator works</h2>
+    <p><strong>Gallons</strong> = miles ÷ MPG, plus idle hours × 0.8 gal/hr if you enter them.</p>
+    <p><strong>Total cost</strong> = gallons × price per gallon. <strong>Fuel cost per mile</strong> = total ÷ trip miles — the number to plug into your cost per mile and load profit math.</p>
+    <p>Small changes compound fast: at 100,000 miles a year, going from 6.0 to 6.5 MPG at $3.60/gal saves about $4,600 — a set of steer tires and then some.</p>
+  </section>
+</ToolLayout>
+
+<script>
+  const $ = (id: string) => document.getElementById(id) as HTMLInputElement;
+  const num = (id: string) => {
+    const v = parseFloat($(id).value);
+    return Number.isFinite(v) ? v : 0;
+  };
+  const usd = (v: number, d = 2) =>
+    '$' + v.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+
+  function update() {
+    const miles = num('miles');
+    const mpg = Math.max(num('mpg'), 0.1);
+    const driveGal = miles / mpg;
+    const idleGal = num('idle') * 0.8;
+    const totalGal = driveGal + idleGal;
+    const cost = totalGal * num('price');
+
+    $('out-gal').textContent = driveGal.toFixed(1);
+    $('out-idlegal').textContent = idleGal.toFixed(1);
+    $('out-cost').textContent = usd(cost, 0);
+    $('out-cpm').textContent = miles > 0 ? usd(cost / miles) : '$0.00';
+  }
+
+  document.getElementById('fuel-form')!.addEventListener('input', update);
+  update();
+</script>

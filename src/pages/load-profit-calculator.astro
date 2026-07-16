@@ -1,0 +1,115 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import { relatedFor } from '../data/tools';
+
+const faqs = [
+  {
+    q: 'How do I know if a load is worth taking?',
+    a: 'Divide the total pay by ALL the miles the load makes you drive — loaded plus deadhead. If that all-miles rate beats your cost per mile with room to spare, the load makes money. If it only beats your cost on loaded miles but not total miles, the deadhead is quietly eating your profit.',
+  },
+  {
+    q: 'Why count deadhead miles against the load?',
+    a: 'Your truck burns fuel and racks up wear on empty miles too, but nobody pays you for them. The only honest way to judge a load is to charge its deadhead against it: pay ÷ (loaded + deadhead miles).',
+  },
+  {
+    q: 'What is a good rate per mile in 2026?',
+    a: 'It depends on your own cost per mile — that is the number that decides profit, not a national average. Most owner-operators run costs of $1.60–$2.20 per mile all-in, so rates need to clear that with margin. Use our cost per mile calculator first if you do not know your number.',
+  },
+  {
+    q: 'How does the dispatch or broker fee work here?',
+    a: 'The percentage you enter is taken off the gross pay before anything else, which is how most dispatch services charge. If your rate is already net of fees, leave it at zero.',
+  },
+];
+---
+
+<ToolLayout
+  metaTitle="Load Profit Calculator — Is That Load Worth It? (Free) | Haul-Calc"
+  description="Free trucking load calculator: enter pay, loaded miles, deadhead and your cost per mile to see real profit, rate on all miles and margin before you book."
+  h1="Load Profit Calculator"
+  intro="Punch in the load before you accept it: pay, miles, deadhead, your cost per mile. See the true rate on all miles and the profit you'd actually keep."
+  faqs={faqs}
+  related={relatedFor('load-profit-calculator')}
+>
+  <form class="tool" id="load-form" slot="tool" autocomplete="off">
+    <fieldset>
+      <legend>The load</legend>
+      <div class="field">
+        <label for="pay">Load pays (gross $)</label>
+        <input type="number" id="pay" value="2600" min="0" step="50" inputmode="decimal" />
+      </div>
+      <div class="field">
+        <label for="loaded">Loaded miles</label>
+        <input type="number" id="loaded" value="1000" min="0" step="10" inputmode="numeric" />
+      </div>
+      <div class="field">
+        <label for="deadhead">Deadhead miles</label>
+        <input type="number" id="deadhead" value="150" min="0" step="10" inputmode="numeric" />
+      </div>
+      <div class="field">
+        <label for="fee">Dispatch / broker fee (%)<span class="hint">taken off gross — 0 if none</span></label>
+        <input type="number" id="fee" value="0" min="0" max="100" step="0.5" inputmode="decimal" />
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Your truck</legend>
+      <div class="field">
+        <label for="cpm">Your cost per mile ($)<span class="hint">don't know it? use the cost per mile calculator</span></label>
+        <input type="number" id="cpm" value="1.18" min="0" step="0.01" inputmode="decimal" />
+      </div>
+    </fieldset>
+
+    <div class="results" aria-live="polite">
+      <div class="label">Profit on this load</div>
+      <div class="big" id="out-profit">$0</div>
+      <div class="row"><span>Total miles (loaded + deadhead)</span><strong id="out-miles">0</strong></div>
+      <div class="row"><span>Rate on all miles</span><strong id="out-rate-all">$0.00/mi</strong></div>
+      <div class="row"><span>Net pay after fee</span><strong id="out-net">$0</strong></div>
+      <div class="row"><span>Cost to run it</span><strong id="out-cost">$0</strong></div>
+      <div class="row"><span>Profit per mile</span><strong id="out-ppm">$0.00</strong></div>
+      <div class="row"><span>Margin</span><strong id="out-margin">0%</strong></div>
+    </div>
+  </form>
+
+  <section slot="content">
+    <h2>How this calculator works</h2>
+    <p><strong>Net pay</strong> = gross pay − dispatch/broker fee.</p>
+    <p><strong>Rate on all miles</strong> = net pay ÷ (loaded + deadhead miles). This is the number to compare against other loads — it punishes long deadhead the way your fuel tank does.</p>
+    <p><strong>Cost to run it</strong> = your cost per mile × total miles. <strong>Profit</strong> is what's left, and <strong>margin</strong> is profit as a share of net pay.</p>
+    <p>A load can look great at $2.60/loaded mile and still lose money once 300 deadhead miles and a 10% dispatch fee come out. This math catches that before you're committed.</p>
+  </section>
+</ToolLayout>
+
+<script>
+  const $ = (id: string) => document.getElementById(id) as HTMLInputElement;
+  const num = (id: string) => {
+    const v = parseFloat($(id).value);
+    return Number.isFinite(v) ? v : 0;
+  };
+  const usd = (v: number, d = 2) =>
+    (v < 0 ? '-$' : '$') + Math.abs(v).toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+
+  function update() {
+    const totalMiles = num('loaded') + num('deadhead');
+    const net = num('pay') * (1 - num('fee') / 100);
+    const cost = num('cpm') * totalMiles;
+    const profit = net - cost;
+    const rateAll = totalMiles > 0 ? net / totalMiles : 0;
+    const ppm = totalMiles > 0 ? profit / totalMiles : 0;
+    const margin = net > 0 ? (profit / net) * 100 : 0;
+
+    $('out-miles').textContent = totalMiles.toLocaleString('en-US');
+    $('out-rate-all').textContent = usd(rateAll) + '/mi';
+    $('out-net').textContent = usd(net, 0);
+    $('out-cost').textContent = usd(cost, 0);
+    $('out-ppm').textContent = usd(ppm);
+    $('out-margin').textContent = margin.toFixed(1) + '%';
+
+    const out = $('out-profit');
+    out.textContent = usd(profit, 0);
+    out.style.color = profit >= 0 ? '' : '#ff8a80';
+  }
+
+  document.getElementById('load-form')!.addEventListener('input', update);
+  update();
+</script>

@@ -1,0 +1,104 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import { relatedFor } from '../data/tools';
+
+const faqs = [
+  {
+    q: 'What is the trucker per diem rate for 2026?',
+    a: 'For travel from October 1, 2025 the IRS special transportation industry rate is $80 per full day in the continental U.S. and $86 per day outside it (Canada/Mexico runs). Partial days — the day you leave and the day you get home — count at 75% of the rate.',
+  },
+  {
+    q: 'Why is only 80% of my per diem deductible?',
+    a: 'Per diem is legally a meal allowance, and the tax code caps meal deductions for transportation workers at 80%. This calculator applies the 80% automatically, so the deduction figure is what actually lands on your return.',
+  },
+  {
+    q: 'Who can claim trucker per diem?',
+    a: 'Owner-operators and self-employed drivers who spend nights away from their tax home under DOT hours-of-service rules. Company drivers cannot deduct per diem on their own return since 2018 — but many carriers run per diem pay programs instead.',
+  },
+  {
+    q: 'What records do I need to keep?',
+    a: 'Proof of the days: logbook or ELD records showing you were away overnight. You do not need meal receipts when using the standard per diem rate — that is the point of it.',
+  },
+  {
+    q: 'How much tax does per diem actually save me?',
+    a: 'The deduction reduces taxable income, so savings = deduction × your combined tax rate (federal bracket + ~15.3% self-employment tax on that income). At 300 full days, the 2026 rate produces a $19,200 deduction — roughly $7,100 saved for a driver in the 22% bracket paying SE tax.',
+  },
+];
+---
+
+<ToolLayout
+  metaTitle="Trucker Per Diem Calculator 2026 — $80/Day IRS Rate | Haul-Calc"
+  description="Free truck driver per diem calculator with 2026 IRS rates: $80 full days, 75% partial days, 80% deductible — see your deduction and estimated tax savings instantly."
+  h1="Trucker Per Diem Calculator (2026)"
+  intro="Days on the road in, tax deduction out. Uses the 2026 IRS transportation rate — $80 full days, 75% for departure/return days, 80% deductible rule applied."
+  faqs={faqs}
+  related={relatedFor('per-diem-calculator')}
+>
+  <form class="tool" id="pd-form" slot="tool" autocomplete="off">
+    <fieldset>
+      <legend>Your days away</legend>
+      <div class="field">
+        <label for="fulldays">Full days on the road</label>
+        <input type="number" id="fulldays" value="250" min="0" step="1" inputmode="numeric" />
+      </div>
+      <div class="field">
+        <label for="partialdays">Partial days<span class="hint">day you leave + day you return</span></label>
+        <input type="number" id="partialdays" value="50" min="0" step="1" inputmode="numeric" />
+      </div>
+      <div class="field">
+        <label for="rate">Daily rate ($)<span class="hint">80 = US · 86 = outside CONUS</span></label>
+        <input type="number" id="rate" value="80" min="0" step="1" inputmode="decimal" />
+      </div>
+      <div class="field">
+        <label for="taxrate">Your combined tax rate (%)<span class="hint">bracket + SE tax, for the savings estimate</span></label>
+        <input type="number" id="taxrate" value="30" min="0" max="60" step="1" inputmode="numeric" />
+      </div>
+    </fieldset>
+
+    <div class="results" aria-live="polite">
+      <div class="label">Your per diem deduction</div>
+      <div class="big" id="out-deduction">$0</div>
+      <div class="row"><span>Total per diem (before 80% rule)</span><strong id="out-gross">$0</strong></div>
+      <div class="row"><span>Full days</span><strong id="out-full">$0</strong></div>
+      <div class="row"><span>Partial days (75%)</span><strong id="out-partial">$0</strong></div>
+      <div class="row"><span>Estimated tax savings</span><strong id="out-savings" class="profit-pos">$0</strong></div>
+    </div>
+  </form>
+
+  <section slot="content">
+    <h2>How this calculator works</h2>
+    <p><strong>Total per diem</strong> = full days × daily rate + partial days × 75% of the rate.</p>
+    <p><strong>Deduction</strong> = total × 80% — the IRS cap for DOT drivers. <strong>Estimated savings</strong> = deduction × your combined tax rate.</p>
+    <p>The 2026 rate ($80/day CONUS, $86 outside) applies to travel from October 1, 2025 through September 30, 2026. If your tax year straddles the change, your accountant may prorate — this tool gives the planning number.</p>
+    <div class="note">
+      Estimates for planning only. Per diem rules have real edge cases (tax home, restart weeks, local runs) — confirm your return with a tax professional who knows trucking.
+    </div>
+  </section>
+</ToolLayout>
+
+<script>
+  const $ = (id: string) => document.getElementById(id) as HTMLInputElement;
+  const num = (id: string) => {
+    const v = parseFloat($(id).value);
+    return Number.isFinite(v) ? v : 0;
+  };
+  const usd = (v: number) => '$' + v.toLocaleString('en-US', { maximumFractionDigits: 0 });
+
+  function update() {
+    const rate = num('rate');
+    const full = num('fulldays') * rate;
+    const partial = num('partialdays') * rate * 0.75;
+    const gross = full + partial;
+    const deduction = gross * 0.8;
+    const savings = deduction * (num('taxrate') / 100);
+
+    $('out-full').textContent = usd(full);
+    $('out-partial').textContent = usd(partial);
+    $('out-gross').textContent = usd(gross);
+    $('out-deduction').textContent = usd(deduction);
+    $('out-savings').textContent = usd(savings);
+  }
+
+  document.getElementById('pd-form')!.addEventListener('input', update);
+  update();
+</script>

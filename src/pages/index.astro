@@ -1,14 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
+import { tools } from '../data/tools';
 
-const tools = [
-  {
-    href: '/cost-per-mile-calculator',
-    title: 'Cost Per Mile Calculator',
-    blurb:
-      'Your true cost per mile from fixed and variable costs — plus break-even rate and profit per load.',
-  },
-];
+const icons: Record<string, string> = {
+  'cost-per-mile-calculator': 'M3 17h2l2-8 3 12 3-16 3 12 2-6h3',
+  'ifta-calculator': 'M5 3h9l5 5v13H5zM14 3v5h5M8 12h8M8 16h5',
+  'load-profit-calculator': 'M3 20h18M6 20V9m6 11V4m6 16v-8',
+  'fuel-cost-calculator': 'M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16M5 21h10M15 9l3-2 2 2v8a2 2 0 1 1-4 0v-4h-1M8 7h4',
+  'per-diem-calculator': 'M4 5h16v16H4zM4 9h16M9 3v4m6-4v4M8 14h3m-3 4h6',
+  'truck-payment-calculator': 'M12 3v18M8 7.5C8 6 9.5 5 12 5s4 1 4 2.5S14.5 10 12 10s-4 1-4 2.5S9.5 15 12 15s4-1 4-2.5',
+  'pay-per-mile-calculator': 'M3 12h13M12 5l7 7-7 7',
+  'detention-pay-calculator': 'M12 3a9 9 0 1 0 9 9M12 7v5l4 2M17 3l4 4',
+  'fuel-surcharge-calculator': 'M4 19L19 4M6.5 8a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm11 11a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z',
+  'hours-of-service-calculator': 'M6 3h12M6 21h12M8 3c0 5 8 5 8 9s-8 4-8 9m8-18c0 5-8 5-8 9s8 4 8 9',
+};
 
 const schema = [
   {
@@ -16,30 +21,48 @@ const schema = [
     '@type': 'WebSite',
     name: 'Haul-Calc',
     url: 'https://haul-calc.com/',
-    description: 'Free online calculators for owner-operators and truckers.',
+    description: 'Free online calculators for owner-operators and truck drivers.',
   },
 ];
 ---
 
 <Base
   title="Haul-Calc — Free Trucking Calculators for Owner-Operators"
-  description="Free calculators for owner-operators: cost per mile, IFTA fuel tax, per diem, load profit and more. No sign-up, runs in your browser, nothing stored."
+  description="10 free calculators built for truckers: cost per mile, IFTA fuel tax, load profit, per diem, detention pay, hours of service and more. No sign-up, nothing stored."
   schema={schema}
 >
-  <h1>Free trucking calculators for owner-operators</h1>
-  <p class="subtitle">
-    Know your numbers before you book the load. Every tool is free, runs in your
-    browser, and stores nothing.
-  </p>
+  <div class="hero">
+    <h1>Know your numbers before you book the load.</h1>
+    <p class="subtitle">
+      Ten free calculators built for owner-operators — cost per mile, IFTA, load
+      profit, per diem and more. Everything runs in your browser: no sign-up, no
+      tracking, nothing stored.
+    </p>
+  </div>
 
   <div class="tool-grid">
     {tools.map((t) => (
-      <a class="tool-card" href={t.href} style="text-decoration:none;color:inherit;">
+      <a class="tool-card" href={`/${t.slug}`}>
+        <div class="icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d={icons[t.slug]} />
+          </svg>
+        </div>
         <h2>{t.title}</h2>
         <p>{t.blurb}</p>
       </a>
     ))}
   </div>
 
-  <p class="subtitle">More calculators coming: IFTA fuel tax, per diem, load profit, toll cost, and more.</p>
+  <h2>Built for the cab, not the office</h2>
+  <p>
+    Every tool here answers one question a working trucker actually asks — what
+    does this load pay after deadhead, what do I owe IFTA this quarter, how many
+    hours do I get back at midnight. Big buttons, instant results, works on a
+    phone in a truck stop parking lot.
+  </p>
+  <p>
+    Your numbers never leave your device. There is no account, no upload, no
+    database — close the tab and it's gone.
+  </p>
 </Base>

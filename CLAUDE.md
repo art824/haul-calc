@@ -87,7 +87,7 @@ Total estimado: 35–50 dias de trabalho ativo em 4–6 meses de calendário.
 - Se algo neste documento se provar errado com dado real, proponha a mudança explicitamente ao Arthur, explique em linguagem simples, e registre em `DECISOES.md`. Não mude silenciosamente.
 
 ## STATUS ATUAL
-- Fase: 1 (pipeline de template) — em andamento.
+- Fase: 1+2 (site completo construído localmente) — a pedido do Arthur, Fases 1 e 2 foram executadas juntas.
 - Nicho: **caminhoneiro autônomo / owner-operator trucking** (EUA, inglês). Domínio: **haul-calc.com** (Arthur comprando). Ver `DECISOES.md` (2026-07-16).
-- Feito nesta sessão: repo git iniciado; Astro 5 estático + sitemap configurado para haul-calc.com; layout base + `ToolLayout` (SEO on-page completo: title/description únicos, canonical, OG, schema WebApplication + FAQPage automáticos); primeira ferramenta no ar localmente — **/cost-per-mile-calculator** (cálculo verificado, reatividade testada no navegador); homepage; robots.txt.
-- Próximos passos: (1) Arthur confirma compra do domínio; (2) Arthur cria repo no GitHub e conecta ao Cloudflare Pages (ação humana — contas dele); (3) verificar Search Console + ativar Cloudflare Web Analytics; (4) partir para a Fase 2 (lista das 10 primeiras ferramentas, decisão C).
+- Feito: **site completo com 10 ferramentas** (lista e justificativa na decisão C em `DECISOES.md`), identidade visual própria ("asphalt & diesel", pensada pro público), SEO on-page completo em todas as páginas, interlinking automático via `src/data/tools.ts`, IFTA com tabela Q2 2026 embutida (única manutenção recorrente assumida: 4x/ano). Todas as 10 calculadoras verificadas no navegador contra cálculos à mão. Build: 11 páginas + sitemap.
+- Próximos passos (nesta ordem): (1) Arthur compra o domínio haul-calc.com; (2) Arthur cria repo GitHub + conecta Cloudflare Pages (build `npm run build`, output `dist`) e aponta o domínio; (3) Search Console verificado + Cloudflare Web Analytics; (4) submeter sitemap; (5) entra a Fase 3 (espera medida, log semanal de impressões).
