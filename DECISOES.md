@@ -88,3 +88,19 @@ Cada entrada: data, decisão, justificativa em 1 linha.
 **Design (identidade):** público é caminhoneiro autônomo americano, não usuário de SaaS — paleta "asphalt & diesel" (grafite #22262d, âmbar/laranja segurança #f5a623/#e87511, fundo creme quente), faixa hazard diagonal como assinatura visual, tipografia system bold (zero fontes externas = performance), inputs de 46px+ (uso com luva/polegar no celular), resultados em painel escuro com número grande âmbar. Logo SVG inline (caminhão estilizado) + favicon SVG data-URI. Zero imagens, zero libs.
 
 **Verificação:** build 11 páginas ok; as 10 calculadoras testadas no navegador com casos calculados à mão — todas exatas (incl. IFTA com e sem surcharge, amortização, per diem, recap HOS). Zero erros de console.
+
+---
+
+## 2026-07-17 — Site no ar: haul-calc.com lançado
+
+**Decisão:** domínio `haul-calc.com` comprado via Cloudflare Registrar (~US$10,44/ano, preço de custo, sem markup) em vez de `haul-calc.net` — motivo: confiança do público (.com é o padrão reconhecido), evitar que usuário digite `.com` de cabeça e caia no domínio de terceiro `haulcalc.com` (parado, brokerado), e zero retrabalho já que todo o site já apontava pra `.com`.
+
+**Pipeline de deploy:** GitHub (`github.com/art824/haul-calc`, branch `master`) → Cloudflare Pages (build `npm run build`, output `dist`) → domínio customizado conectado, DNS automático (mesma conta Cloudflare). Testado antes com o subdomínio grátis `haul-calc.pages.dev` sem custo nenhum — canonical tags já apontavam pra `haul-calc.com` desde o início, então esse teste não gerou nenhum resíduo de indexação errada.
+
+**Checklist de lançamento — todos verificados em 2026-07-17:**
+- Site no ar em `https://haul-calc.com`, HTTPS ativo, canonical/title/10 ferramentas corretos
+- `robots.txt` e `sitemap-index.xml` respondendo 200
+- Google Search Console: propriedade de domínio verificada (registro TXT), sitemap submetido e processado ("Índice de Sitemaps", status Processado)
+- Cloudflare Web Analytics: RUM ativado globalmente (aguardando primeiras visitas pra popular dados — comportamento esperado, não é erro)
+
+**Efeito prático: Fase 3 (espera medida, 60-90 dias) começa a contar oficialmente a partir de 2026-07-17.** Critérios de morte (imutáveis, definidos no CLAUDE.md): menos de 500 impressões orgânicas somadas em 60 dias, OU nenhuma página no top 20 em 90 dias ⇒ nicho morre, troca-se de nicho reaproveitando o template. Log semanal de impressões via lembrete no Google Calendar (toda segunda, configurado até início de novembro/2026).
