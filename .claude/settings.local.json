@@ -11,7 +11,8 @@
       "mcp__claude-in-chrome__find",
       "mcp__claude-in-chrome__tabs_create_mcp",
       "PowerShell(node --version)",
-      "PowerShell(npm --version)"
+      "PowerShell(npm --version)",
+      "mcp__6dda1b88-c901-4557-9083-ac2ff14d17e5__create_draft"
     ]
   }
 }

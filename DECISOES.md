@@ -4,6 +4,98 @@ Cada entrada: data, decisão, justificativa em 1 linha.
 
 ---
 
+## 2026-07-31 — Filtro de nicho por TIPO de concorrente + fim da busca de nicho até 15/09
+
+**Decisão A — a busca por 2º nicho está ENCERRADA até 2026-09-15 (portão da Fase 4).**
+Nenhuma pesquisa de nicho novo, nenhum Keyword Planner, nenhuma checagem de SERP de
+outro mercado até lá. Único trabalho permitido: o da Fase 3 (checar Search Console
+semanalmente, consertar bug, melhorar página que já mostra impressão).
+
+**Justificativa:** o `CLAUDE.md` só destrava a Fase 0 se o haul-calc MORRER no portão.
+Nas 2 semanas seguintes ao lançamento foram gastos ~10 dias pesquisando 6 nichos
+candidatos — exatamente o comportamento que a Fase 3 existe pra impedir. Pior: o dado
+do próprio site mostra que ele está **passando**, não morrendo (372 impressões contra
+piso de 500 em 60 dias; melhor página na posição 12,18, ou seja, o critério de "top 20
+em 90 dias" já está tecnicamente batido no dia 13). A correria estava respondendo a uma
+crise que o dado não reportava. Passado pelo llm-council (5 conselheiros + peer review):
+4 dos 5 apontaram o problema de timing independentemente.
+
+**Decisão B — o critério de nicho passa a ser TIPO de concorrente, não presença de
+concorrente — mas com 3 portões obrigatórios antes.** A régua binária ("existe
+concorrente nesse termo? então descarta") era ruim: todo nicho que tem dinheiro atrai
+algum concorrente, então ela matava o pool inteiro de candidatos. Substituída por:
+
+*Classificação do concorrente (só o tipo 6 é bloqueio real):*
+| Tipo | O que ele NÃO consegue consertar | Veredito |
+|---|---|---|
+| 1. SaaS usando calc como isca de lead | o gate de email É o modelo de negócio; a ferramenta tem que puxar pro produto dele | atacável |
+| 2. Blog/mídia com plugin de calculadora | calculadora é acessório, sem cluster, página lenta | muito atacável |
+| 3. Fabricante (semente, fertilizante, equipamento) | é enviesado por construção, nunca dirá "compre menos" | atacável via independência |
+| 4. Governo / órgão oficial | serve a intenção "declarar", não "estimar/planejar"; nunca cobre o cluster ao redor | atacável só no ENTORNO, nunca no termo-cabeça |
+| 5. Indie dedicado de 1 ferramenta | difícil no termo dele, mas não tem cluster | não brigar, cercar |
+| 6. Ferramenta financiada com DADO PROPRIETÁRIO (AirDNA) | nada — o dado é o fosso | **bloqueio real** |
+
+*Portões obrigatórios ANTES de aplicar a classificação (senão o filtro vira
+racionalização):*
+1. **Piso de volume** (passo 2 do processo de 7 passos). Teria matado vending machine
+   em 1 hora — o problema lá nunca foi concorrência, era ~50 buscas/mês.
+2. **O público aguenta pagar US$5-15/mês?** (passo 5). Gate de email prova que um time
+   de vendas paga por aquele *lead* — não prova que o profissional assinaria. São dois
+   motores econômicos diferentes.
+3. **Encaixe do operador** (NOVO — 3º portão, não existia antes). Idioma e habilidade
+   que o Arthur tem de fato. Nicho que exige habilidade ausente não está "disponível".
+
+**Decisão C — "caçar calculadora com email gate" foi REBAIXADO de critério de caça
+para critério de desempate.** Só se aplica entre candidatos que já passaram nos 3
+portões acima. Motivo: confunde *atacável* com *rankeável* — tirar o gate melhora
+conversão, não é sinal de ranking do Google. E "existe calculadora com gate?" quase
+sempre volta "sim", o que é tão pouco informativo quanto uma regra que sempre volta "não".
+
+**Decisão D — Alemanha (trucking) está MORTA, pelo 3º portão.** O Arthur não lê SERP
+nem escreve copy em alemão, e o `CLAUDE.md` manda todo conteúdo do produto em inglês.
+O `niche-candidates.md` terminava num passo que nunca aconteceu (Arthur abrir o
+google.de pessoalmente) e que agora não pode acontecer. O filtro novo estava servindo
+pra passar por cima desse buraco. **O fato de o filtro corrigido matar justamente o
+nicho que ele tinha ressuscitado é a prova de que virou filtro e não racionalização.**
+
+**Padrão registrado pra não repetir:** esta é a **terceira** vez que a régua de rejeição
+é afrouxada logo depois de uma leva de rejeições (16/07, 22/07, agora 31/07). Se isso
+acontecer uma 4ª vez, tratar como sinal de viés do processo, não como descoberta.
+
+---
+
+## 2026-07-22 — Processo maduro de descoberta de nicho (passa a valer daqui pra frente)
+
+**Decisão:** adotar um processo formal de 7 passos pra avaliar qualquer nicho/país
+candidato, substituindo a checagem ad-hoc usada até aqui:
+
+1. **Brainstorm de candidatos** (Claude propõe 5-8, evitando verticais já provadas
+   saturadas globalmente: transporte/logística, taxa-hora de freelancer, aluguel de
+   curta temporada, fitness).
+2. **Checagem de volume** (Arthur, Google Keyword Planner, país/idioma-alvo, sementes
+   LARGAS — sementes estreitas mascaram volume real).
+3. **Checagem de concorrente** (Claude, busca com a frase natural que um humano
+   digitaria, não variação artificial). Classificar cada concorrente achado:
+   órgão oficial de governo (bloqueio duro no termo) / hub comprehensivo já pronto
+   (bloqueio duro no nicho) / SaaS financiada usando calculadora como isca (difícil
+   mas batível) / artigo-blog-fórum solto (aberto).
+4. **Veredito de viabilidade**: inviável / difícil mas possível / aberto.
+5. **Checagem de rentabilização**: a renda e cultura de assinatura do país/público
+   aguenta US$5-15/mês? Que prazo é realista?
+6. **Plano do site** (só se passou 4 e 5): lista de 10-15 ferramentas, termo-âncora,
+   reaproveitamento de template, prazo.
+7. **Double-check final** de SERP antes de qualquer build.
+
+**Justificativa:** sessão de 2026-07-21/22 expôs 3 erros de método que esse processo
+corrige — (a) Airbnb foi descartado só depois que Arthur checou o SERP com os
+próprios olhos, não bastou minha leitura; (b) busca com frase artificial ("berechnung
+maut") escondeu concorrentes reais que a frase natural ("maut rechner") revelou;
+(c) Brasil/caminhoneiro parecia promissor até achar que já existe hub comprehensivo
+pronto (FreteLab) + calculadora oficial da ANTT — pior que qualquer coisa vista antes.
+Ver `niche-candidates.md` para o histórico completo dessa sessão.
+
+---
+
 ## 2026-07-16 — Ajuste no critério de seleção de nicho (Fase 0)
 
 **Decisão:** trocar o filtro "não existe ferramenta para essa busca" por "nenhum concorrente cobre o nicho inteiro com um cluster de 20-30 ferramentas interligadas".
