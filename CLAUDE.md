@@ -55,14 +55,14 @@ Este é o documento-mestre do projeto. Foi gerado após uma pesquisa de mercado 
      viabilidade; (5) checagem se o país/público aguenta o preço do tier pago;
      (6) plano do site; (7) double-check final de SERP antes de build. Documente a
      decisão e os números neste arquivo.
-   - **3 PORTÕES OBRIGATÓRIOS antes de classificar concorrente (2026-07-31):** um nicho
+   - **3 PORTÕES OBRIGATÓRIOS antes de classificar concorrente (2026-08-03):** um nicho
      só chega no passo 3 depois de passar em (a) piso de volume, (b) o público aguenta
      pagar US$5-15/mês, (c) **encaixe do operador** — idioma e habilidade que o Arthur
      tem de fato. Sem os portões, a classificação de concorrente vira racionalização:
      como quase todo tipo de concorrente é "atacável", ela sozinha aprova tudo.
    - **Presença de concorrente NÃO reprova.** O que reprova é o TIPO: só ferramenta
      financiada com dado proprietário (ex.: AirDNA) é bloqueio real. Tabela completa
-     dos 6 tipos em DECISOES.md (2026-07-31). Cuidado: "atacável" não é "rankeável" —
+     dos 6 tipos em DECISOES.md (2026-08-03). Cuidado: "atacável" não é "rankeável" —
      tirar email gate do concorrente melhora conversão, não é sinal de ranking.
    
 **B. Nome/domínio** — só depois do nicho.
@@ -106,7 +106,8 @@ Total estimado: 35–50 dias de trabalho ativo em 4–6 meses de calendário.
 - Nicho: **caminhoneiro autônomo / owner-operator trucking** (EUA, inglês). Domínio: **haul-calc.com** (comprado e ativo). Ver `DECISOES.md`.
 - Feito: site completo com 10 ferramentas, identidade visual "asphalt & diesel", SEO on-page completo, interlinking automático, IFTA com tabela Q2 2026 embutida. Deploy: GitHub → Cloudflare Pages → domínio customizado. Search Console verificado + sitemap processado + Cloudflare Web Analytics ativado. Checklist completo em `DECISOES.md` (2026-07-17).
 - Trabalho permitido agora (regra da Fase 3): consertar bugs, melhorar página que já mostra impressão no Search Console. **Proibido:** adicionar ferramentas novas em massa, redesign, tier pago.
-- **PROIBIDO TAMBÉM até 2026-09-15: qualquer pesquisa de nicho novo** (Keyword Planner, checagem de SERP de outro mercado, brainstorm de candidatos). Decisão de 31/07, ver DECISOES.md — a Fase 0 só destrava se o site MORRER no portão. Nas 2 primeiras semanas isso foi violado (~10 dos 13 primeiros dias gastos caçando 2º nicho). Se eu propuser retomar essa busca antes de 15/09, aponte esta linha.
+- **PROIBIDO TAMBÉM até 2026-09-15: qualquer pesquisa de nicho novo** (Keyword Planner, checagem de SERP de outro mercado, brainstorm de candidatos). Decisão de 03/08, ver DECISOES.md — a Fase 0 só destrava se o site MORRER no portão. Nas 2 primeiras semanas isso foi violado (~10 dos 13 primeiros dias gastos caçando 2º nicho). Se eu propuser retomar essa busca antes de 15/09, aponte esta linha.
 - Cadência: lembrete semanal no Google Calendar (segundas, até início de nov/2026) pra checar Search Console e reportar números numa sessão — aí registro no log. Critérios de morte em 60 e 90 dias, ver seção DECIDIDO acima.
-- **Números até 2026-07-30 (dia 13):** 372 impressões, 1 clique, melhor página (/pay-per-mile-calculator/) na posição 12,18 com 284 impressões. Ou seja: o critério de "top 20 em 90 dias" já está tecnicamente batido, e o de 500 impressões em 60 dias está em ritmo folgado. Log completo em `search-console-log.md`.
-- Último conserto (31/07): title e meta description de /pay-per-mile-calculator/ reescritos pra ganhar CTR — título cabia em 72 chars (Google corta em ~60), e "cents per mile"/CPM não apareciam no título apesar de serem a maior consulta da página.
+- **OS DOIS CRITÉRIOS DE MORTE JÁ FORAM BATIDOS (dado de 2026-08-03, dia 17, dados até 01/08):** 502 impressões (meta era 500 em 60 dias, batido em ~44 dias de antecedência) e melhor página na **posição 10,89** (meta era top 20 em 90 dias). O nicho não morreu — a resposta do portão da Fase 4 já é conhecida, falta só formalizar na data. Log completo em `search-console-log.md`.
+- Consertos feitos em 03/08 (ambos permitidos na Fase 3): (a) title e meta description de /pay-per-mile-calculator/ reescritos pra ganhar CTR — o título tinha 72 chars e o Google corta em ~60, e "cents per mile"/CPM não apareciam nele apesar de serem a maior consulta da página; (b) **bug de URL duplicada** — todos os links internos (grid da home e "related tools") apontavam para `/slug` sem barra final, enquanto o canonical e o sitemap usam `/slug/`, o que fez o Google indexar as duas variantes da detention-pay e dividir o sinal de ranking entre elas. Corrigido em `src/data/tools.ts` e `src/pages/index.astro`.
+- **Ponto aberto pro próximo check (~10/08):** /cost-per-mile-calculator/ ficou com exatamente 70 impressões e posição 57,39 em dois exports seguidos, ou seja zero impressão nova entre 29/07 e 01/08 enquanto todas as outras páginas cresceram. Se persistir, investigar.

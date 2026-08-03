@@ -75,5 +75,7 @@ export function relatedFor(slug: string, count = 4) {
   for (let i = 1; out.length < count && i < tools.length; i++) {
     out.push(tools[(idx + i) % tools.length]);
   }
-  return out.map((t) => ({ href: `/${t.slug}`, label: t.title }));
+  // Trailing slash must match the canonical URL Astro emits (directory build
+  // format), or Google indexes both variants and splits the ranking signal.
+  return out.map((t) => ({ href: `/${t.slug}/`, label: t.title }));
 }

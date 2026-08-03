@@ -161,7 +161,7 @@ alemães com os próprios olhos (mesmo método usado pra descartar Airbnb) — a
 remota (WebSearch por trecho) já foi até o limite do que dá pra confirmar sem isso.
 Build continua sendo decisão da Fase 4. Ver [[niche-selection-strategy-debate]].
 
-## 6. Revisão pelas 15 alavancas de diferenciação + conselho (2026-07-31) — BUSCA ENCERRADA
+## 6. Revisão pelas 15 alavancas de diferenciação + conselho (2026-08-03) — BUSCA ENCERRADA
 
 Última sessão de nicho antes do portão da Fase 4. Arthur pediu pra reler todas as
 tentativas sob 15 lentes de diferenciação (mais barato / rápido / melhor / fácil /
@@ -184,7 +184,7 @@ personalizado e sob demanda (exigiriam conta/backend, proibido até a Fase 6); "
 
 ### CORREÇÃO FACTUAL — França/TICPE
 A tabela da §5 dizia "TICPE: só artigo/guia, ZERO calculadora encontrada". **Isso está
-errado.** Checagem de 31/07 achou: simulador **oficial do governo**, público e sem
+errado.** Checagem de 03/08 achou: simulador **oficial do governo**, público e sem
 login, em `www3.impots.gouv.fr/simulateur/tinterc_remb/`, **mais** privados já rodando
 (carburant.pro, lapauseinfo.fr). Pelo próprio filtro de tipo de concorrente, esse é o
 pior caso possível: um órgão oficial cuja ferramenta **já é grátis e já é sem gate** —
@@ -204,7 +204,7 @@ não sobra nenhuma alavanca pra puxar. França confirmada morta, agora por motiv
   KWS/Yara, mas a âncora (Düngeverordnung) é conformidade legal obrigatória com ferramenta
   oficial. E cai no mesmo portão de idioma da Alemanha.
 
-### O que o conselho pegou (llm-council, 5 conselheiros + peer review, 31/07)
+### O que o conselho pegou (llm-council, 5 conselheiros + peer review, 03/08)
 - **4 dos 5 apontaram, sem combinar, que essa pesquisa não deveria estar acontecendo.**
   ~10 dos primeiros 13 dias de vida do site foram gastos caçando o 2º nicho, dentro de
   uma fase que proíbe exatamente isso.
@@ -215,14 +215,14 @@ não sobra nenhuma alavanca pra puxar. França confirmada morta, agora por motiv
   22/07) já tinha o passo 2 de volume (mataria vending em 1h) e o passo 5 de "esse público
   aguenta pagar". Não faltava filtro novo — faltava usar o que já existia.
 - **Terceira vez que a régua é afrouxada depois de uma leva de rejeições** (16/07, 22/07,
-  31/07). Padrão registrado no DECISOES.md pra reconhecer se acontecer de novo.
+  03/08). Padrão registrado no DECISOES.md pra reconhecer se acontecer de novo.
 - **Placar como sinal de viés:** 6 nichos testados, 5 seguiram mortos e exatamente 1
   ressuscitou — justo o mais recente em que havia tempo investido.
 - **atacável ≠ rankeável:** tirar o email gate melhora conversão, não é sinal de ranking.
 - **lead ≠ assinatura:** um gate prova que um time de vendas paga por aquele contato, não
   que o profissional assinaria US$5-15/mês.
 
-**Decisão registrada no DECISOES.md (31/07):** filtro por tipo de concorrente adotado
+**Decisão registrada no DECISOES.md (03/08):** filtro por tipo de concorrente adotado
 **com 3 portões obrigatórios antes** (volume, capacidade de pagar, encaixe do operador);
 "caçar email gate" rebaixado a critério de desempate; busca de nicho encerrada até 15/09.
 

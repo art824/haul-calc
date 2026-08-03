@@ -4,7 +4,7 @@ Cada entrada: data, decisão, justificativa em 1 linha.
 
 ---
 
-## 2026-07-31 — Filtro de nicho por TIPO de concorrente + fim da busca de nicho até 15/09
+## 2026-08-03 — Filtro de nicho por TIPO de concorrente + fim da busca de nicho até 15/09
 
 **Decisão A — a busca por 2º nicho está ENCERRADA até 2026-09-15 (portão da Fase 4).**
 Nenhuma pesquisa de nicho novo, nenhum Keyword Planner, nenhuma checagem de SERP de
@@ -59,7 +59,7 @@ pra passar por cima desse buraco. **O fato de o filtro corrigido matar justament
 nicho que ele tinha ressuscitado é a prova de que virou filtro e não racionalização.**
 
 **Padrão registrado pra não repetir:** esta é a **terceira** vez que a régua de rejeição
-é afrouxada logo depois de uma leva de rejeições (16/07, 22/07, agora 31/07). Se isso
+é afrouxada logo depois de uma leva de rejeições (16/07, 22/07, agora 03/08). Se isso
 acontecer uma 4ª vez, tratar como sinal de viés do processo, não como descoberta.
 
 ---
