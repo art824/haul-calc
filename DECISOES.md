@@ -4,6 +4,71 @@ Cada entrada: data, decisão, justificativa em 1 linha.
 
 ---
 
+## 2026-08-04 — Site 2 construído (terraplanagem) + a régua de nicho muda de novo
+
+**Decisão A — a proibição de pesquisa de nicho até 15/09 (decidida ontem) foi revogada
+pelo Arthur, com argumento que eu aceito.** A disciplina de "uma aposta por vez" foi
+calibrada quando construir um site custava 12-17 dias de trabalho. O template já existe;
+site 2 é fork + conteúdo. **A regra estava precificando um custo que não existe mais.**
+Resultado de SEO é distribuição de cauda longa: com custo por tentativa perto de zero
+(~US$10/ano + cota de IA ociosa), número de tentativas vale mais que otimizar qualquer
+tentativa isolada. Registro que resisti duas vezes e que a resistência estava errada.
+
+**Decisão B — a régua "o nicho está ocupado?" está MORTA, refutada pelo nosso próprio
+site.** 22 buscas, 2 idiomas, 5 formatos (calculadora, gerador de documento, otimizador,
+consulta, referência), 22 nichos: **21 de 22 ocupados** por 6-12 ferramentas grátis e sem
+gate. Português igual inglês. Regulação nova (tarifas 2025-26, CBAM de jan/2026, reforma
+tributária brasileira) é farmeada em menos de 12 meses. E os mesmos domínios aparecem em
+nichos sem relação nenhuma — `toolgrit.com`, `infinitycalculator.com`, `usecalcpro.com`,
+`calcshed.com`, `toolblocks.app`, `solvebility.com`, `sparkshift.app`, `voltcalc.app`,
+`intrysys.com`: **fazendas de calculadora multi-nicho — a nossa estratégia,
+industrializada por builders com IA.** O toolgrit já tem cost-per-mile e trucking
+startup cost, ou seja, concorrente direto do haul-calc.
+
+**Mas o haul-calc rankeia em 10,89 com 17 dias, e o nicho dele TAMBÉM estava ocupado**
+(ver entrada de 16/07: "quase todo termo-cabeça já tem ferramenta grátis rankeando").
+Ocupação não prevê fracasso — passei 3 semanas medindo uma variável que o nosso próprio
+experimento refuta. Corolário: "sem email gate, rápido, mobile" **não é mais
+diferencial**, é o padrão de todo entrante novo. Eu tinha vendido isso como fosso.
+
+**Decisão C — a régua nova: a versão rasa de uma fazenda seria visivelmente errada pra
+quem é do ramo?** Fórmula única = a fazenda já tem, não se ganha. Dado por jurisdição,
+atualização periódica ou lógica de várias etapas = não dá pra fakear. E um teste barato
+que passa a ser obrigatório: **checar se os termos de cauda longa têm SERP própria** —
+se devolvem a mesma página dos termos-cabeça, não existe cauda longa, existem 4 keywords
+e 39 enfeites.
+
+**Decisão D — site 2 = terraplanagem/earthwork (EUA, inglês), repo `cutfill-calc`.**
+Keyword Planner (EUA/inglês): 44 termos, ~8.950/mês, mas `gravel tonnage calculator`
+sozinho é 5.000 (56%) e é intenção de dono de casa. Núcleo profissional: **~3.950/mês**,
+1/5 a 1/7 do cluster de caminhoneiro — passa raspando no piso do CLAUDE.md.
+**O que decidiu foi o teste de SERP da cauda:** `cut and fill calculations excel` devolve
+PDF de universidade, Chegg, Scribd, tutorial de Excel e 3 vídeos de YouTube —
+**zero calculadoras.** Melhor abertura em 22 buscas, e é a tese fundadora do projeto ao
+pé da letra. Por isso o site é **estreito e fundo em cut & fill**, não amplo em
+"calculadoras de terraplanagem": a âncora tem SERP vazia, o cluster genérico não.
+
+**Objeção do conselho que NÃO foi derrubada, fica registrada:** teto de cliques.
+39 termos × 50/mês × 20% de CTR na posição 1 em todos = **390 cliques/mês no teto
+absoluto**. Pior: clique é limiar, não proporção — o haul-calc tem 502 impressões e
+1 clique porque posição ~11 gera impressão sem clique, e um nicho com 1/5 do volume
+repetindo posição 10 pode produzir zero. **Este site é experimento, não aposta de
+negócio.** Se morrer no portão, morre barato e ensina.
+
+**Decisão E — mitigação de footprint, não-negociável.** Três revisores do conselho
+apontaram, independentemente, que vários sites templatizados do mesmo dono em infra
+compartilhada **têm a assinatura estrutural das próprias fazendas** que identificamos
+como ameaça, e podem ser classificados como rede de doorway. Portanto: identidade visual
+completamente diferente (feito — "blueprint & survey", corte vermelho / aterro azul,
+contra o "asphalt & diesel"), **zero links entre os dois sites**, propriedade separada no
+Search Console, analytics separado.
+
+**Erro meu registrado:** apresentei "concorrência baixa em 90% dos termos" como ponto a
+favor. É métrica de leilão de anúncio, não de dificuldade orgânica — e eu já tinha
+documentado exatamente esse erro em 21/07 no arquivo de memória. Repeti mesmo assim.
+
+---
+
 ## 2026-08-03 — Filtro de nicho por TIPO de concorrente + fim da busca de nicho até 15/09
 
 **Decisão A — a busca por 2º nicho está ENCERRADA até 2026-09-15 (portão da Fase 4).**
