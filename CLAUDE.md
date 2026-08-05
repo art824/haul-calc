@@ -16,7 +16,19 @@ Este é o documento-mestre do projeto. Foi gerado após uma pesquisa de mercado 
 
 **O que estamos construindo:** um conjunto ("cluster") de 10 a 40 mini-ferramentas web gratuitas (calculadoras, conversores, geradores) dentro de UM único nicho profissional, num único domínio. Monetização futura: tier pago de US$5–15/mês (batch, API, sem limites). 
 
-**Por que ferramentas e não conteúdo:** os AI Overviews do Google destruíram o tráfego de artigos (CTR da posição 1 cai ~58% quando há AI Overview; tráfego informacional −42% sem recuperação). Ferramentas interativas são o único formato SEO que resiste: a IA descreve o cálculo, mas não o executa — o usuário precisa entrar na página.
+**Por que ferramentas e não conteúdo:** ~~a IA descreve o cálculo, mas não o executa — o usuário precisa entrar na página.~~ **REVISADO EM 2026-08-05: a premissa original era FALSA e custou dois sites.**
+
+Teste no Google direto, 7 consultas: AI Overview em **3 de 3** consultas de calculadora e **0 de 4** de diagnóstico. Em `truck driver cents per mile calculator` ele dá a fórmula, o exemplo numérico e oferece *"if you share your rate and weekly miles, I can calculate your exact income"*. Em `cut and fill calculator` — âncora do site 2 — explica o método da grade e **cita uma fazenda concorrente como fonte**.
+
+**A tese correta é IRREDUTIBILIDADE, não interatividade.** O que decide é quantas incógnitas interdependentes precisam ser resolvidas antes de existir resposta:
+- **Uma incógnita, fórmula única** (custo por milha, cut & fill, tonelagem) → o Google responde acima da dobra. Rankear não vira clique. **Formato morto.**
+- **Várias incógnitas contingentes ao caso do usuário** (por que a peça está com fio: depende de direct drive vs Bowden, umidade do filamento, e qual de 5 causas) → o Google não resume e entrega bloco de fórum. **Formato que sobrevive.**
+
+**Consequência:** haul-calc e cutfillcalc estão no formato consumido. O haul-calc bateu os dois critérios de morte produzindo **1 clique** — porque impressão e posição medem se o Google te escolheu como *fonte*, e ele escolheu. Rankear bem e ser colhido viraram o mesmo evento.
+
+**PORTÃO NOVO, o primeiro e mais barato de todos:** antes de qualquer nicho, buscar a consulta-cabeça no Google e ver se tem AI Overview. Custa 30 segundos e teria reprovado 2 dos nossos 3 sites.
+
+**Critérios de morte precisam de PISO DE CLIQUES**, não só impressões e posição — os dois atuais não detectam esse modo de falha.
 
 **Restrição inegociável do projeto:** manutenção pós-lançamento próxima de zero. O operador estará indisponível por períodos longos (intercâmbio em 2026/2). Nada de servidor para administrar, banco de dados para migrar, ou dependência que quebre sozinha.
 
