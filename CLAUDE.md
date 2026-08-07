@@ -22,9 +22,12 @@ Construir algo que **gere dinheiro** com **manutenção próxima de zero**.
   mas não use um número maior como régua — a régua antiga de R$5k/mês era suposição, nunca
   foi validada, e em 05/08 ela me fez argumentar que "a aritmética não fecha" quando com o
   número real ela fecha bem.
-- **Manutenção quase zero é restrição inegociável**, não preferência. O Arthur fica
-  indisponível por períodos longos (intercâmbio em 2026/2). Nada de servidor pra
-  administrar, banco pra migrar, suporte a usuário, ou dependência que quebre sozinha.
+- **Manutenção:** ~~restrição inegociável~~ — **AFROUXADA em 2026-08-06.** A regra original
+  existia porque o Arthur ficaria indisponível no intercâmbio. Ele declarou que **tempo não
+  é problema** e que manutenção mais frequente está ok. Continua valendo: nada que quebre
+  sozinho sem ninguém olhando, e nada com suporte a usuário leigo em volume. Mas **trabalho
+  recorrente do Arthur deixou de ser proibido** — e essa regra, somada às antigas proibições,
+  vinha eliminando opções inteiras sozinha antes de qualquer avaliação.
 - **Orçamento:** ~US$10-20 por aposta. Acima disso, precisa de justificativa explícita.
 
 Tudo abaixo é meio. Se um meio parar de servir ao objetivo, troque o meio.
@@ -122,6 +125,10 @@ do **resultado final** (clique, venda, receita) — não só de métricas interm
 
 ## APOSTAS ATIVAS
 
+Duas pernas, de naturezas diferentes de propósito.
+
+### Perna de ATIVO — sites (roda sozinha no fundo)
+
 Todas são sites estáticos de SEO. Isso é histórico, não obrigação: foi o que as regras
 antigas permitiam. Apostas novas não precisam ter essa forma.
 
@@ -147,6 +154,32 @@ duplicar aqui. Repos: `projeto automatic money` (haul-calc), `cutfill-calc`, `pr
 links entre os sites do Arthur**, Search Console e analytics separados. Vários sites
 templatizados do mesmo dono em infra compartilhada têm a assinatura estrutural das fazendas
 de calculadora e podem ser classificados como rede de doorway.
+
+### Perna de CAIXA — serviço produtizado (aberta em 2026-08-06)
+
+**Por que existe:** é a única coisa testada em ~10 plataformas onde **o Arthur inicia o
+contato** em vez de esperar um algoritmo escolher. Sem ranqueamento, sem repasse que a
+plataforma pode cortar, sem AI Overview respondendo no lugar dele.
+
+**Aritmética que decide:** US$100/mês = **um trabalho pequeno por mês.** Comparar com
+20.000 visitas de site com anúncio, ou 12 meses esperando domínio novo amadurecer.
+
+**Desenho:** oferta única, escopo fechado, preço fixo, prazo fixo, uma revisão declarada.
+Entrada em US$150-250 — e **o preço baixo é o mecanismo, não a limitação**: abaixo de certo
+valor ninguém faz diligência, ninguém pede call, ninguém pede portfólio. É assim que se
+atende a preferência do Arthur por contato mínimo.
+
+**Distribuição:** dar lance em vaga já publicada — o comprador já levantou a mão e já
+escreveu o escopo. Filtrar por **cliente publicando o primeiro projeto dele**, que é
+mensuravelmente mais aberto a contratar quem não tem avaliação.
+
+**O valor que os sites nunca tiveram:** cada cliente diz, com dinheiro na mesa, o que as
+pessoas realmente pagam. Os três sites foram construídos sobre chute, três vezes.
+**Produtizar o que se repetir** — serviço primeiro para aprender, produto depois.
+
+**Expectativa honesta:** 15-20 propostas antes do primeiro sim é normal, não é sinal de
+fracasso. Poucas propostas específicas batem muitas genéricas, e proposta com cara de IA é
+motivo citado de rejeição.
 
 ---
 
