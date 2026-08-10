@@ -197,3 +197,56 @@ Nova Zelândia, Chile, Irã, Países Baixos.
 /pay-per-mile-calculator/ foi feita em 03/08 e este export só cobre até 01/08 —
 **o efeito não aparece aqui de jeito nenhum.** O Google leva de alguns dias a
 ~2 semanas pra recolher o snippet novo. Julgar isso no check de ~17/08.
+
+---
+
+## 2026-08-10 — quarto registro (dia 24) — **A TESE DO AI OVERVIEW SE CONFIRMA**
+
+**Fonte:** export do Search Console, dados até 08/08.
+
+- **Impressões totais: 920** (695 celular + 221 desktop + 4 tablet)
+- **Cliques: 1** (o mesmo de 23/07) | **CTR: 0,11%**
+
+### O dado que importa
+
+| | dia 17 | dia 24 |
+|---|---|---|
+| Impressões | 502 | **920** |
+| Melhor página, posição | 10,89 | **9,59** |
+| Cliques | 1 | **1** |
+
+**A posição melhorou e entrou na página 1. O clique não mexeu.** O CTR caiu de 0,20%
+para 0,11% — está piorando em proporção.
+
+Na posição 9,6 o CTR esperado é 2-3%, o que projetaria 20-27 cliques sobre 920
+impressões. Vieram 1.
+
+**Segunda confirmação embutida:** o title e a meta description da /pay-per-mile-calculator/
+foram reescritos em 03/08 sob a hipótese de que o problema era o snippet. Uma semana
+depois, impressão subiu e clique não. **O conserto não funcionou porque o diagnóstico
+estava errado.**
+
+Isso não é leitura de número pequeno e ambíguo como nos registros anteriores. É a
+**anomalia persistindo com o dobro da amostra e com a posição melhorando** — exatamente
+o que a tese do AI Overview prevê (ver CLAUDE.md, revisão de 05/08), e o oposto do que
+"só falta rankear melhor" preveria.
+
+**Páginas:**
+| Página | Impressões | Posição |
+|---|---|---|
+| /pay-per-mile-calculator/ | 729 | **9,59** |
+| /cost-per-mile-calculator/ | 70 | 57,39 (congelada pelo 3º export seguido) |
+| / (home) | 63 | 80,65 |
+| /detention-pay-calculator/ | 53 | 44,91 |
+| /detention-pay-calculator (sem barra) | 13 | 40,62 |
+
+**A /cost-per-mile-calculator/ segue exatamente em 70 impressões / posição 57,39 pelo
+terceiro export consecutivo.** Zero impressão nova desde 29/07 enquanto todas as outras
+cresceram. Não é coincidência — é padrão. Investigar.
+
+**Consulta nova no topo:** `trucking calculator`, 31 impressões, posição 84,77.
+
+**Leitura:** o nicho não morreu e o site rankeia bem. Mas rankear não está virando
+tráfego, e agora temos evidência forte do porquê. O formato calculadora está sendo
+consumido acima da dobra. Nada a consertar aqui — o aprendizado já está no CLAUDE.md e
+o teste que importa agora é o printdefect, que está no formato que o Google não sintetiza.
