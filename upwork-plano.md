@@ -39,6 +39,23 @@ Filtrando preço fechado + pagamento verificado + menos de 10 propostas, os orç
 **1.170 vagas verificadas com menos de 10 propostas. Destas, 249 são de clientes que
 nunca contrataram ninguém.**
 
+> **CORREÇÃO (10/08):** esse número é de outro filtro e não serve como alvo. Refiltrando
+> pelo que o Arthur de fato faria — Wix/Squarespace/WordPress + verificado + **menos de 5
+> propostas** — dá **302 vagas, das quais 49 de cliente sem histórico de contratação.**
+> Não 249. Repeti um número bruto sem filtrar por intenção, que é o aprendizado 6 do
+> CLAUDE.md sendo violado de novo.
+
+> **CORREÇÃO 2 (10/08): as vagas de US$5 não são golpe.** Eu tinha mandado pular, repetindo
+> asserção de um conselheiro sem verificar. Olhando os clientes que postam a US$5:
+> `$2K+ gastos, nota 5,0, pagamento verificado`. **O "$5" é o campo de orçamento preenchido
+> no mínimo, não o preço real.** Regra correta: julgar pelo histórico de gasto do cliente e
+> pelo texto da vaga, nunca pelo número postado.
+
+> **CORREÇÃO 3 (10/08): existe vaga boa com poucas propostas.** Encontrei US$500 fixo,
+> cliente verificado com US$6K gastos e nota 5,0, **menos de 5 propostas, postada há 1
+> minuto**. Meu achado anterior ("vaga com poucas propostas é sempre US$5-20") era retrato
+> de um instante, não padrão. O que decide não é o orçamento — é **quão recente é a vaga**.
+
 ### A vaga de GEO que parecia a melhor — e por que caiu
 
 *"Creative GEO/AIO specialist — UK Psychotherapy Platform"*, cliente com $70K+ gastos,
@@ -89,11 +106,46 @@ opcionalidade. Isso bate com o objetivo declarado: US$10 agora, US$30 em algumas
 olhando a aba o dia inteiro. Vence com filtro estreito o suficiente pra só chegar alerta
 que vale a pena.
 
-### O teste que evita repetir o erro do projeto
+### ~~O teste de duas molduras~~ — CANCELADO em 10/08
 
-Em vez de cravar a identidade antes e descobrir depois: **testar duas molduras nas
-primeiras 8 propostas** e cravar o perfil pelo que receber resposta. É a checagem barata
-aplicada antes do compromisso, em vez de depois.
+Eu tinha proposto alternar duas molduras em 8 propostas e decidir pelo que respondesse.
+**Não funciona.** Com taxa de resposta de 5-15%, cada braço produz **0,2 a 0,6 resposta**.
+Isso não distingue nada — é A/B decorativo, exatamente o "rigor de processo disfarçando
+ausência de teste" da regra 5. Uma moldura só, nas 15.
+
+### O que de fato bloqueia, descoberto olhando o perfil publicado (10/08)
+
+Eu estava escrevendo texto de proposta com o perfil furado. O que está faltando vale mais
+que qualquer escolha de moldura:
+
+| Item | Estado | Peso |
+|---|---|---|
+| **Portfólio** | **VAZIO** | o próprio Upwork diz: *"talent are hired **9x** more often if they've published a portfolio"* |
+| **Identidade verificada (IDV)** | **não verificada** | *"clients trust and hire freelancers who have a visible IDV Badge"* |
+| GitHub / StackOverflow | não vinculados | o Upwork promove como aumento de chance, e ele tem 3 repos reais |
+| Título, taxa, skills | ainda os antigos | US$35/h e sem WordPress/Wix/Squarespace |
+| Erro de gramática na bio | *"UFMG, the strongest architecture schoolS"* | sinaliza descuido logo no parágrafo da formação |
+| Data do histórico | "September 2025 – Present" | os sites são de julho/agosto de 2026 |
+| "Brazil time" | sumiu da bio publicada | era a linha que atacava o medo nº1 do comprador |
+
+**Ordem correta: consertar os sete acima ANTES de gastar o primeiro Connect.** São todos
+grátis e o portfólio sozinho vale mais que qualquer refinamento de texto.
+
+Descoberta lateral útil: o perfil já declara **francês e espanhol conversacionais** além de
+inglês fluente e português nativo. Isso não estava sendo usado em lugar nenhum.
+
+### Critério de resultado, escrito ANTES (o erro dos critérios de morte, corrigido)
+
+Definido em 10/08, imutável. Depois de **15 propostas enviadas**:
+
+| Observação | Diagnóstico | Resposta |
+|---|---|---|
+| Menos de 3 visualizações | o problema é o **perfil** | parar de propor, refazer perfil |
+| 3+ visualizações, zero resposta | o problema é a **proposta** | reescrever, não comprar mais Connects |
+| Zero visualização E zero resposta | a hipótese do Upwork **cai** | não é ajuste, é canal errado |
+| 1+ resposta, mesmo sem contrato | o funil **funciona** | seguir, ajustar preço e alvo |
+
+Isso mede **resultado**, não atividade. "15 propostas enviadas" não é sucesso — é custo.
 
 ---
 

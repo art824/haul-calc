@@ -122,17 +122,36 @@ e o que não dá pra medir"*.
 
 ---
 
-## O teste embutido nesta leva
+## ~~Teste de duas molduras~~ — cancelado
 
-Nas primeiras 8 propostas, alternar **duas molduras**:
+Cancelado em 10/08: com 4 propostas por braço e taxa de resposta de 5-15%, cada braço
+produz 0,2 a 0,6 resposta. **Não distingue nada.** Era A/B decorativo. Usar o modelo C
+como padrão (é o único com prova real) e A/B só como variação de formato, não como teste.
 
-- **Moldura 1 (4 propostas):** "conserto rápido e barato" — modelos A e B, sem mencionar
-  SEO nem dado nenhum.
-- **Moldura 2 (4 propostas):** "conserto rápido feito por quem sabe medir" — modelo C,
-  com a prova.
+## O que fazer ANTES da primeira proposta
 
-**Registrar qual recebe resposta.** Aí a identidade do perfil se decide por dado em vez de
-por argumento — que é a checagem barata que este projeto pulou três vezes.
+Descoberto olhando o perfil publicado, e vale mais que qualquer refinamento de texto:
 
-Métrica a anotar por proposta: data, vaga, orçamento, nº de propostas concorrentes,
-cliente tinha histórico de contratação?, moldura usada, houve visualização?, houve resposta?
+1. **Publicar o portfólio.** Está vazio. O próprio Upwork afirma **9x mais contratações**
+   com portfólio publicado. Três itens: printdefect.com (o mais bem construído), e dois
+   projetos de arquitetura — o site de escritório e o agregador de estágios de BH.
+   *Regra de footprint: só um dos três sites de SEO.*
+2. **Verificar identidade (IDV).** *"Clients trust and hire freelancers who have a visible
+   IDV Badge."* É grátis.
+3. **Vincular GitHub.** O Upwork promove como aumento de chance e você tem 3 repos reais.
+4. **Consertar a bio publicada:** está escrito *"UFMG, the strongest architecture schoolS
+   in Brazil"* — plural quebrado. E sumiu o **"Brazil time"**, que era justamente a linha
+   que atacava o medo nº1 de quem contrata sem avaliação.
+5. **Corrigir a data do histórico:** está "September 2025 – Present"; os sites são de
+   julho/agosto de 2026.
+6. Aplicar título, taxa (US$18) e skills novos.
+
+**Nada disso custa Connect e o portfólio sozinho pesa mais que a escolha de moldura.**
+
+## Registro por proposta
+
+Anotar: data · vaga · orçamento postado · nº de propostas concorrentes · o cliente já
+contratou antes? · **houve visualização?** · **houve resposta?**
+
+A coluna de visualização é a que decide entre "problema de perfil" e "problema de
+proposta" no critério de resultado do `upwork-plano.md`.
