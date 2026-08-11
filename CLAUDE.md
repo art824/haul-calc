@@ -134,9 +134,21 @@ antigas permitiam. Apostas novas não precisam ter essa forma.
 
 | Aposta | Estado | Formato | Prognóstico |
 |---|---|---|---|
-| **haul-calc.com** | dia 19 · 502 impressões · 1 clique · pos. 10,89 | calculadora | formato consumido pelo AI Overview. **Deixar rodando, não investir.** |
-| **cutfillcalc.com** | lançado 04/08 | calculadora | idem, e cluster pequeno (~390 cliques/mês de teto) |
-| **printdefect.com** | lançado 06/08 | **diagnóstico** | única no formato que o Google ainda não sintetiza |
+| **haul-calc.com** | dia 24 · 920 impressões · 1 clique · pos. **9,59** | calculadora | ver ressalva abaixo. **Deixar rodando e medindo, não investir.** |
+| **cutfillcalc.com** | dia 6 · 55 impressões · pos. 7 e 6,87 | calculadora | idem, e cluster pequeno (~390 cliques/mês de teto) |
+| **printdefect.com** | dia 4 · 3 impressões | **diagnóstico** | cedo demais pra leitura. Único no formato que o Google ainda não sintetiza |
+
+**RESSALVA IMPORTANTE (corrigida em 10/08, a pedido do Arthur — 2ª correção minha no mesmo
+eixo, portanto erro de método):** eu escrevi "formato consumido, morto". **Isso extrapola o
+dado.** O que está estabelecido é que **posição 9-10 com AI Overview em cima não converte**
+(920 impressões, 1 clique, e a posição melhorou de 10,89 para 9,59 sem o clique mexer).
+O que NÃO foi testado é se **top 3-5 converteria** — não existe nenhum ponto de dado no
+portfólio com volume suficiente nessa faixa. A hipótese do Arthur ("ninguém desce até o
+último link; se subir pro top 5 aí sim dá pra cobrar") continua **aberta**.
+
+Ajuste que se mantém: o AI Overview derruba a curva inteira, então top 3 hoje rende menos
+do que rendia. **Marcador que decide:** se alguma página chegar em top 5 com volume decente
+e o CTR continuar perto de zero, a hipótese do Arthur cai. Se subir e converter, cai a minha.
 
 Critérios de morte e racional de cada uma ficam no README do respectivo repo — não
 duplicar aqui. Repos: `projeto automatic money` (haul-calc), `cutfill-calc`, `print-fixer`.
